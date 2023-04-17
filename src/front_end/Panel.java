@@ -89,6 +89,7 @@ public class Panel extends JPanel {
 		add(tabuleiro);
 		add(logo);
 		add(fundo);
+		new pecas(kankuro1).start();; 
 		
 		
 
