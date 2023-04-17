@@ -34,22 +34,23 @@ public class pecas extends Thread{
 		posX = peca.getX();
 		posY = peca.getY();
 		
-		for(int i = 0 ; i < 500 ; i++) {
+		for(int i = 0 ; i < 31 ; i++) {
 			sleep();
 			if(i%2 == 0) {
-				img = new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"));
+				img = new ImageIcon(Panel.class.getResource("/resources/kankuro_ataque1.png"));
 			}else {
-				img = new ImageIcon(Panel.class.getResource("/resources/kankuro_frente2.png"));
+				img = new ImageIcon(Panel.class.getResource("/resources/kankuro_ataque2.png"));
 			}
 			peca.setIcon(img);
 			posY += 10;
-			posX -= 10;
+			posX -= 5;
 			peca.setLocation(posX + i, posY + i);
 		}
+		peca.setIcon(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
 	}
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(300);
+			TimeUnit.MILLISECONDS.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

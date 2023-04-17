@@ -24,10 +24,10 @@ public class Panel extends JPanel {
 	private JLabel kankuro3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
 	private JLabel kankuro4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
 	
-	private JLabel chouji1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/chouji_frente1.png")));
-	private JLabel chouji2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/chouji_frente1.png")));
-	private JLabel chouji3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/chouji_frente1.png")));
-	private JLabel chouji4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/chouji_frente1.png")));
+	private JLabel choji1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
+	private JLabel choji2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
+	private JLabel choji3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
+	private JLabel choji4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
 	
 	private JLabel gaara1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
 	private JLabel gaara2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
@@ -49,14 +49,14 @@ public class Panel extends JPanel {
 		fundo.setBounds(0, 0, 1000, 700);
 		logo.setBounds(442,5,100,193);
 		
-		chouji1.setBounds(300, 145, 35, 64);
-		add(chouji1);
-		chouji2.setBounds(355, 145, 35, 64);
-		add(chouji2);
-		chouji3.setBounds(300, 200, 35, 64);
-		add(chouji3);
-		chouji4.setBounds(355, 200, 35, 64);
-		add(chouji4);
+		choji1.setBounds(300, 145, 35, 64);
+		add(choji1);
+		choji2.setBounds(355, 145, 35, 64);
+		add(choji2);
+		choji3.setBounds(300, 200, 35, 64);
+		add(choji3);
+		choji4.setBounds(355, 200, 35, 64);
+		add(choji4);
 		
 		kankuro1.setBounds(600, 145, 35, 64);
 		add(kankuro1);
