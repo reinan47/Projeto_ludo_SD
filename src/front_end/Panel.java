@@ -24,6 +24,7 @@ public class Panel extends JPanel {
 	
 	//private JButton sound = new JButton("SOUND");
 	//private JButton soundOFF = new JButton("SOUNDOFF");
+	private tocaTrilhaSonora somFundo;
 	
 
 
@@ -55,10 +56,9 @@ public class Panel extends JPanel {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	
-		    	if(sound.isEnabled()) {
 		    		t.start();
-		    		sound.setEnabled(false);
-		    	}
+		    		
+		    	
 		    }
 		});
 		soundOFF.addActionListener(new ActionListener() {
@@ -67,17 +67,16 @@ public class Panel extends JPanel {
 		    	
 		    	
 		    		t.stop();
-		    		sound.setEnabled(true);
 		    	
 		    }
 		});*/
 		
 		setLocale(null);
 		this.setLayout(null);
-		//soundOFF.setBounds(870, 80, 100, 20);
-		//add(soundOFF);
-		//sound.setBounds(870, 40, 80, 20);
-		//add(sound);
+		/*soundOFF.setBounds(870, 80, 100, 20);
+		add(soundOFF);
+		sound.setBounds(870, 40, 80, 20);
+		add(sound);*/
 	
 
 		tabuleiro.setBounds(220, 100, 550, 550);

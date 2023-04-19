@@ -46,7 +46,6 @@ public class pecas extends Thread {
 		posY = peca.getY() - 50;
 
 		for (int i = 0; i < numDado; i++) {
-
 			if (i % 2 == 0) {
 				img = new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"));
 			} else {
@@ -146,9 +145,9 @@ public class pecas extends Thread {
 			}
 			if (i >= 51 && i < 57) {
 				if (i % 2 == 0) {
-					img = new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"));
+					img = new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"));
 				} else {
-					img = new ImageIcon(Panel.class.getResource("/resources/kankuro_frente2.png"));
+					img = new ImageIcon(Panel.class.getResource("/resources/gaara_frente2.png"));
 				}
 				posY += 33;
 			}
@@ -158,7 +157,7 @@ public class pecas extends Thread {
 			peca.setLocation(posX, posY);
 
 		}
-		peca.setIcon(new ImageIcon(Panel.class.getResource("/resources/kankuro_ataque.png")));
+		peca.setIcon(new ImageIcon(Panel.class.getResource("/resources/gaara_ataque.png")));
 		//vozGaara();
 		//vozChoji();
 		vozKankuro();
@@ -198,7 +197,7 @@ public class pecas extends Thread {
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(500);
+			TimeUnit.MILLISECONDS.sleep(100);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
