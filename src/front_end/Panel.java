@@ -1,8 +1,11 @@
 package front_end;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -10,88 +13,122 @@ public class Panel extends JPanel {
 	/**
 	 *
 	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getResource("/resources/tabuleiro_jogo.png")));
 
 	private JLabel logo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/logo.png")));
-	
+
 	private JLabel fundo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/fundo.png")));
 	
-	//personagens
-	private JLabel kankuro1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
-	private JLabel kankuro2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
-	private JLabel kankuro3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
-	private JLabel kankuro4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png")));
+	//private JButton sound = new JButton("SOUND");
+	//private JButton soundOFF = new JButton("SOUNDOFF");
 	
-	private JLabel choji1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
-	private JLabel choji2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
-	private JLabel choji3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
-	private JLabel choji4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png")));
-	
-	private JLabel gaara1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
-	private JLabel gaara2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
-	private JLabel gaara3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
-	private JLabel gaara4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png")));
-	
-	private JLabel konohamaru1 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/konohamaru_frente1.png")));
-	private JLabel konohamaru2 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/konohamaru_frente1.png")));
-	private JLabel konohamaru3 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/konohamaru_frente1.png")));
-	private JLabel konohamaru4 = new JLabel(new ImageIcon(Panel.class.getResource("/resources/konohamaru_frente1.png")));
+
+
+	// personagens
+	private JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))) };
+
+	private JLabel[] choji = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))) };
+
+	private JLabel[] gaara = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))) };
+
+	private JLabel[] sasuke = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))) };
 	/**
 	 * Create the panel.
 	 */
 	public Panel() {
+		/*sound.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	if(sound.isEnabled()) {
+		    		t.start();
+		    		sound.setEnabled(false);
+		    	}
+		    }
+		});
+		soundOFF.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		    	
+		    		t.stop();
+		    		sound.setEnabled(true);
+		    	
+		    }
+		});*/
+		
 		setLocale(null);
 		this.setLayout(null);
+		//soundOFF.setBounds(870, 80, 100, 20);
+		//add(soundOFF);
+		//sound.setBounds(870, 40, 80, 20);
+		//add(sound);
+	
 
 		tabuleiro.setBounds(220, 100, 550, 550);
 		fundo.setBounds(0, 0, 1000, 700);
-		logo.setBounds(442,5,100,193);
+		logo.setBounds(442, 5, 100, 193);
+
+		choji[0].setBounds(272, 132, 98, 87);
+		add(choji[0]);
+		choji[1].setBounds(327, 132, 98, 87);
+		add(choji[1]);
+		choji[2].setBounds(272, 187, 98, 87);
+		add(choji[2]);
+		choji[3].setBounds(327, 187, 98, 87);
+		add(choji[3]);
+
+		kankuro[0].setBounds(568, 132, 98, 87);
+		add(kankuro[0]);
+		kankuro[1].setBounds(622, 132, 98, 87);
+		add(kankuro[1]);
+		kankuro[2].setBounds(568, 187, 98, 87);
+		add(kankuro[2]);
+		kankuro[3].setBounds(622, 187, 98, 87);
+		add(kankuro[3]);
+
+		gaara[0].setBounds(267, 435, 98, 87);
+		add(gaara[0]);
+		gaara[1].setBounds(321, 435, 98, 87);
+		add(gaara[1]);
+		gaara[2].setBounds(267, 490, 98, 87);
+		add(gaara[2]);
+		gaara[3].setBounds(321, 490, 98, 87);
+		add(gaara[3]);
+
+		sasuke[0].setBounds(568, 435, 98, 87);
+		add(sasuke[0]);
+		sasuke[1].setBounds(622, 435, 98, 87);
+		add(sasuke[1]);
+		sasuke[2].setBounds(568, 490, 98, 87);
+		add(sasuke[2]);
+		sasuke[3].setBounds(622, 490, 98, 87);
+		add(sasuke[3]);
 		
-		choji1.setBounds(300, 145, 35, 64);
-		add(choji1);
-		choji2.setBounds(355, 145, 35, 64);
-		add(choji2);
-		choji3.setBounds(300, 200, 35, 64);
-		add(choji3);
-		choji4.setBounds(355, 200, 35, 64);
-		add(choji4);
-		
-		kankuro1.setBounds(600, 145, 35, 64);
-		add(kankuro1);
-		kankuro2.setBounds(655, 145, 35, 64);
-		add(kankuro2);
-		kankuro3.setBounds(600, 200, 35, 64);
-		add(kankuro3);
-		kankuro4.setBounds(655, 200, 35, 64);
-		add(kankuro4);
-		
-		gaara1.setBounds(300, 445, 35, 64);
-		add(gaara1);
-		gaara2.setBounds(355, 445, 35, 64);
-		add(gaara2);
-		gaara3.setBounds(300, 500, 35, 64);
-		add(gaara3);
-		gaara4.setBounds(355, 500, 35, 64);
-		add(gaara4);
-		
-		konohamaru1.setBounds(600, 445, 35, 64);
-		add(konohamaru1);
-		konohamaru2.setBounds(655, 445, 35, 64);
-		add(konohamaru2);
-		konohamaru3.setBounds(600, 500, 35, 64);
-		add(konohamaru3);
-		konohamaru4.setBounds(655, 500, 35, 64);
-		add(konohamaru4);
-		
-		
+
 		add(tabuleiro);
 		add(logo);
 		add(fundo);
-		new pecas(kankuro1).start();; 
-		
-		
+		//de acordo com a resposta do servidor que virá aki será direcionado 
+		//um vetor com as pecas para uma thread, que moverá a peca de acordo com a jogada,
+		//que o servidor sorteará.
+		new tocaTrilhaSonora().start();
+		new pecas(kankuro, 58).start();
 
 	}
 
