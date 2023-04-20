@@ -127,7 +127,7 @@ public class Panel extends JPanel {
 		//um vetor com as pecas para uma thread, que moverá a peca de acordo com a jogada,
 		//que o servidor sorteará.
 		new tocaTrilhaSonora().start();
-		new pecas(kankuro, 58, 1).start();
+		new pecas(choji, 58, 4).start();
 
 	}
 
