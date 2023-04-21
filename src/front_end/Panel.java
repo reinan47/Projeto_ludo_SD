@@ -13,7 +13,7 @@ public class Panel extends JPanel {
 	/**
 	 *
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getResource("/resources/tabuleiro_jogo.png")));
@@ -21,12 +21,13 @@ public class Panel extends JPanel {
 	private JLabel logo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/logo.png")));
 
 	private JLabel fundo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/fundo.png")));
-	
-	//private JButton sound = new JButton("SOUND");
-	//private JButton soundOFF = new JButton("SOUNDOFF");
-	private tocaTrilhaSonora somFundo;
-	
 
+	private JButton sound = new JButton();
+
+	private tocaTrilhaSonora somFundo = new tocaTrilhaSonora();
+
+	private ImageIcon on = new ImageIcon(getClass().getClassLoader().getResource("resources/on.png"));
+	private ImageIcon off = new ImageIcon(getClass().getClassLoader().getResource("resources/off.png"));
 
 	// personagens
 	private JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
@@ -48,36 +49,37 @@ public class Panel extends JPanel {
 			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))) };
+
 	/**
 	 * Create the panel.
 	 */
 	public Panel() {
-		/*sound.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	
-		    		t.start();
-		    		
-		    	
-		    }
+
+		somFundo.start();
+		somFundo.setName("som");
+		sound.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sound.getIcon().equals(on)) {
+					sound.setIcon(off);
+					Thread.;
+					somFundo. stop();
+					
+				} else {
+					somFundo.start();
+					sound.setIcon(on);
+				}
+			}
 		});
-		soundOFF.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	
-		    	
-		    		t.stop();
-		    	
-		    }
-		});*/
-		
 		setLocale(null);
 		this.setLayout(null);
-		/*soundOFF.setBounds(870, 80, 100, 20);
-		add(soundOFF);
-		sound.setBounds(870, 40, 80, 20);
-		add(sound);*/
-	
+		sound.setFocusPainted(false);
+		sound.setContentAreaFilled(false);
+		sound.setOpaque(false);
+		sound.setBorder(null);
+		sound.setBounds(875, 20, 100, 35);
+		sound.setIcon(on);
+		add(sound);
 
 		tabuleiro.setBounds(220, 100, 550, 550);
 		fundo.setBounds(0, 0, 1000, 700);
@@ -118,16 +120,19 @@ public class Panel extends JPanel {
 		add(sasuke[2]);
 		sasuke[3].setBounds(622, 490, 98, 87);
 		add(sasuke[3]);
-		
 
 		add(tabuleiro);
 		add(logo);
 		add(fundo);
-		//de acordo com a resposta do servidor que virá aki será direcionado 
-		//um vetor com as pecas para uma thread, que moverá a peca de acordo com a jogada,
-		//que o servidor sorteará.
-		new tocaTrilhaSonora().start();
-		new pecas(choji, 58, 4).start();
+		// de acordo com a resposta do servidor que virá aki será direcionado
+		// um vetor com as pecas para uma thread, que moverá a peca de acordo com a
+		// jogada,
+		// que o servidor sorteará.
+		// new tocaTrilhaSonora().start();
+		new pecas(kankuro, 50, 1).start();
+		new pecas(sasuke, 10, 2).start();
+		new pecas(gaara, 5, 3).start();
+		new pecas(choji, 52, 4).start();
 
 	}
 

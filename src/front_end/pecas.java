@@ -61,6 +61,9 @@ public class pecas extends Thread {
 
 	public void run() {
 		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar
+		jogada(numDado, peca[0], numPlay);
+		jogada(10, peca[1], numPlay);
+		jogada(numDado, peca[2], numPlay);
 		jogada(numDado, peca[3], numPlay);
 	}
 
@@ -561,7 +564,7 @@ public class pecas extends Thread {
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(1000);
+			TimeUnit.MILLISECONDS.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
