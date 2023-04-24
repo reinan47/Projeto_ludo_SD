@@ -62,7 +62,6 @@ public class Panel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
-					Thread.;
 					somFundo. stop();
 					
 				} else {
@@ -129,10 +128,10 @@ public class Panel extends JPanel {
 		// jogada,
 		// que o servidor sorteará.
 		// new tocaTrilhaSonora().start();
-		new pecas(kankuro, 50, 1).start();
-		new pecas(sasuke, 10, 2).start();
-		new pecas(gaara, 5, 3).start();
-		new pecas(choji, 52, 4).start();
+		new pecas(kankuro, 57+1, 1, "kankuro").start();
+		new pecas(sasuke, 57+1, 2, "sasuke").start();
+		new pecas(gaara, 57+1, 3, "gaara").start();
+		new pecas(choji, 57+1, 4, "choji").start();
 
 	}
 
