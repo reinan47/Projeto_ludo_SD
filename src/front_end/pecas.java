@@ -27,9 +27,6 @@ public class pecas extends Thread {
 	private int[] initialChojiX = { 272, 327, 272, 327 };
 	private int[] initialChojiY = { 132, 132, 187, 187 };
 
-	private int anteriorX;
-	private int anteriorY;
-
 	// posições das casas iniciais quando tirar um 6 no sorteio
 	private int saidaKankuroX = 480;
 	private int saidaKankuroY = 82;
@@ -55,12 +52,12 @@ public class pecas extends Thread {
 	private int posChojiX;
 	private int posChojiY;
 
-	public pecas(JLabel peca[], int numDado, int numPlay, String play) {
+	public pecas(JLabel peca[], int numDado, int numPlay, String personagem) {
 		super();
 		this.peca = peca;
 		this.numDado = numDado;
 		this.numPlay = numPlay;
-		this.personagem = play;
+		this.personagem = personagem;
 	}
 
 	public void run() {
