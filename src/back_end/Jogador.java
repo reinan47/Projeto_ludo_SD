@@ -1,43 +1,60 @@
 package back_end;
-
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 import front_end.pecas;
 
 public class Jogador extends Thread  {
-	private String nomeJogador;
-	private pecas peca;
-	private Socket socket;
-	
-	public Jogador (Socket socket) {
-		super();
-		this.setSocket(socket);
-	}
-	
-	public void run() {
-		
-	}
-	
-	//metodos getters e setters
-	public String getNomeJogador() {
-		return nomeJogador;
-	}
-	public void setNomeJogador(String nomeJogador) {
-		this.nomeJogador = nomeJogador;
-	}
-	public pecas getNomePeca() {
-		return peca;
-	}
-	public void setNomePeca(pecas nomePeca) {
-		this.peca = nomePeca;
-	}
-	public Socket getSocket() {
-		return socket;
-	}
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
-	
-	
-	
+    private Socket socket;
+    private int dado;
+
+    public Jogador (Socket socket) {
+        super();
+        this.setSocket(socket);
+    }
+
+    public void run() {
+        try{
+            PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader lendo = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String inputLine, outputLine;
+            while ((inputLine = lendo.readLine()) != null) {
+                outputLine = "Resposta: " + inputLine;
+                saida.println(outputLine);
+                //System.out.println("Recebido do cliente " + socket.getInetAddress().getHostName() + ": " + inputLine);
+            }
+
+            saida.close();
+            lendo.close();
+            socket.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public int numAleatorio() {
+        Random gerador = new Random();
+        return gerador.nextInt(6) + 1;
+    }
+
+    public int getDado() {
+        return dado;
+    }
+
+    public void setDado(int dado) {
+        this.dado = dado;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+
+
 }

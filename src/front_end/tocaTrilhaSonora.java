@@ -27,7 +27,7 @@ public class tocaTrilhaSonora extends Thread {
 
 			back_sound = AudioSystem.getClip();
 			back_sound.open(AudioSystem.getAudioInputStream(
-					getClass().getClassLoader().getResource("resources/kankuro_sound.wav")));
+					getClass().getClassLoader().getResource("resources/trilha_sonora_naruto.wav")));
 		} catch (LineUnavailableException | UnsupportedAudioFileException | IOException e1) {
 			// TODO Auto-generated catch block
 			((Throwable) e1).printStackTrace();

@@ -31,14 +31,14 @@ public class pecas extends Thread {
 	private int saidaKankuroX = 480;
 	private int saidaKankuroY = 82;
 
-	private int saidaGaaraX = 412;
-	private int saidaGaaraY = 550;
+	private int saidaGaaraX = 414;
+	private int saidaGaaraY = 544;
 
 	private int saidaSasukeX = 678;
-	private int saidaSasukeY = 350;
+	private int saidaSasukeY = 346;
 
-	private int saidaChojiX = 212;
-	private int saidaChojiY = 282;
+	private int saidaChojiX = 216;
+	private int saidaChojiY = 280;
 	// variaveis resposaveis por se movimentar no tabuleiro
 	private int posKankuroX;
 	private int posKankuroY;
@@ -76,6 +76,7 @@ public class pecas extends Thread {
 				Alternar(i, personagem, "frente");
 				if (i <= 5) {
 					posKankuroY += 33;
+					System.out.println("Kankuro"+posKankuroX +" / "+ posKankuroY);
 				}
 				if (i >= 5 && i < 11) {
 					Alternar(i, personagem, "direita");
@@ -175,6 +176,7 @@ public class pecas extends Thread {
 				if (i >= 39 && i <= 44) {
 					Alternar(i, personagem, "frente");
 					posSasukeY += 33;
+					System.out.println("sasuke: "+posSasukeX +" / "+ posSasukeY);
 				}
 				if (i >= 44 && i < 50) {
 					Alternar(i, personagem, "direita");
@@ -226,6 +228,8 @@ public class pecas extends Thread {
 				if (i >= 26 && i <= 31) {
 					Alternar(i, personagem, "frente");
 					posGaaraY += 33;
+					System.out.println("gaara"+posGaaraX +" / "+ posGaaraY);
+
 				}
 				if (i >= 31 && i < 37) {
 					Alternar(i, personagem, "direita");
@@ -277,6 +281,8 @@ public class pecas extends Thread {
 				if (i >= 13 && i <= 18) {
 					Alternar(i, personagem, "frente");
 					posChojiY += 33;
+					System.out.println("choji"+posChojiX +" / "+ posChojiY);
+
 				}
 				if (i >= 18 && i < 24) {
 					Alternar(i, personagem, "direita");
@@ -361,7 +367,7 @@ public class pecas extends Thread {
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(250);
+			TimeUnit.MILLISECONDS.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

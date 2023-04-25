@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import back_end.Jogador;
+
 public class Panel extends JPanel {
 	/**
 	 *
@@ -55,15 +57,15 @@ public class Panel extends JPanel {
 	 */
 	public Panel() {
 
-		somFundo.start();
+		// somFundo.start();
 		somFundo.setName("som");
 		sound.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
-					somFundo. stop();
-					
+					somFundo.stop();
+
 				} else {
 					somFundo.start();
 					sound.setIcon(on);
@@ -128,10 +130,20 @@ public class Panel extends JPanel {
 		// jogada,
 		// que o servidor sorteará.
 		// new tocaTrilhaSonora().start();
-		new pecas(kankuro, 57+1, 1, "kankuro").start();
-		new pecas(sasuke, 57+1, 2, "sasuke").start();
-		new pecas(gaara, 57+1, 3, "gaara").start();
-		new pecas(choji, 57+1, 4, "choji").start();
+		// espera e deifne vez
+		
+		new pecas(kankuro, 1 + 1, 1, "kankuro").start();
+
+		new pecas(sasuke, 40 + 1, 2, "sasuke").start();
+
+		new pecas(gaara, 27 + 1, 3, "gaara").start();
+
+		new pecas(choji, 14 + 1, 4, "choji").start();
+		
+		
+		//envia depois de mexido
+		
+		
 
 	}
 
