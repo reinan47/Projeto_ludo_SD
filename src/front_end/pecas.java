@@ -330,44 +330,44 @@ public class pecas extends Thread {
 		}
 	}
 
-	private void Ataque(JLabel peca, String play) {
-		peca.setIcon(new ImageIcon(Panel.class.getResource("/resources/" + play + "_ataque.png")));
+	private void Ataque(JLabel peca, String personagem) {
+		peca.setIcon(new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_ataque.png")));
+		vozPersonagem(personagem);
 		for (int j = 0; j < 4; j++) {
 			sleep();
 		}
-		peca.setIcon(new ImageIcon(Panel.class.getResource("/resources/" + play + "_frente1.png")));
-		vozPersonagem(play);
+		peca.setIcon(new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_frente1.png")));
 	}
 
 	private void Alternar(int i, String personage, String coordenada) {
 		if (i % 2 == 0) {
-			img = new ImageIcon(Panel.class.getResource("/resources/" + personage + "_" + coordenada + "1.png"));
+			img = new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personage + "_" + coordenada + "1.png"));
 		} else {
-			img = new ImageIcon(Panel.class.getResource("/resources/" + personage + "_" + coordenada + "2.png"));
+			img = new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personage + "_" + coordenada + "2.png"));
 		}
 	}
 
-	public void vozPersonagem(String name) {
-		if (name.equals("gaara")) {
-			name = "gaara";
+	public void vozPersonagem(String personagem) {
+		if (personagem.equals("gaara")) {
+			personagem = "gaara";
 		}
-		if (name.equals("sasuke")) {
-			name = "sasuke";
+		if (personagem.equals("sasuke")) {
+			personagem = "sasuke";
 		}
-		if (name.equals("kankuro")) {
-			name = "kankuro";
+		if (personagem.equals("kankuro")) {
+			personagem = "kankuro";
 		}
-		if (name.equals("choji")) {
-			name = "choji";
+		if (personagem.equals("choji")) {
+			personagem = "choji";
 		}
-		URL url = getClass().getResource("/resources/" + name + "_sound.wav");
+		URL url = getClass().getClassLoader().getResource(personagem + "/" + personagem + "_sound.wav");
 		AudioClip audio = Applet.newAudioClip(url);
 		audio.play();
 	}
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(100);
+			TimeUnit.MILLISECONDS.sleep(250);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

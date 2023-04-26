@@ -2,7 +2,6 @@ package front_end;
 
 import java.io.IOException;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -20,6 +19,12 @@ public class tocaTrilhaSonora extends Thread {
 			e.printStackTrace();
 		}
 	}
+	public void stopSound() {
+		back_sound.stop();
+	}
+	public void startSound() {
+		back_sound.start();
+	}
 
 	public void TrilhaSonora() throws UnsupportedAudioFileException, IOException {
 
@@ -27,7 +32,7 @@ public class tocaTrilhaSonora extends Thread {
 
 			back_sound = AudioSystem.getClip();
 			back_sound.open(AudioSystem.getAudioInputStream(
-					getClass().getClassLoader().getResource("resources/trilha_sonora_naruto.wav")));
+					getClass().getClassLoader().getResource("trilha_sonora_naruto.wav")));
 		} catch (LineUnavailableException | UnsupportedAudioFileException | IOException e1) {
 			// TODO Auto-generated catch block
 			((Throwable) e1).printStackTrace();

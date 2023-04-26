@@ -18,56 +18,56 @@ public class Panel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getResource("/resources/tabuleiro_jogo.png")));
+	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("tabuleiro_jogo.png")));
 
-	private JLabel logo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/logo.png")));
+	private JLabel logo = new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("logo.png")));
 
-	private JLabel fundo = new JLabel(new ImageIcon(Panel.class.getResource("/resources/fundo.png")));
+	private JLabel fundo = new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("fundo.png")));
 
 	private JButton sound = new JButton();
 
 	private tocaTrilhaSonora somFundo = new tocaTrilhaSonora();
 
-	private ImageIcon on = new ImageIcon(getClass().getClassLoader().getResource("resources/on.png"));
-	private ImageIcon off = new ImageIcon(getClass().getClassLoader().getResource("resources/off.png"));
+	private ImageIcon on = new ImageIcon(getClass().getClassLoader().getResource("on.png"));
+	private ImageIcon off = new ImageIcon(getClass().getClassLoader().getResource("off.png"));
 
 	// personagens
-	private JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/kankuro_frente1.png"))) };
+	private JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))) };
 
-	private JLabel[] choji = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/choji_frente1.png"))) };
+	private JLabel[] choji = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))) };
 
-	private JLabel[] gaara = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/gaara_frente1.png"))) };
+	private JLabel[] gaara = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))) };
 
-	private JLabel[] sasuke = { new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))),
-			new JLabel(new ImageIcon(Panel.class.getResource("/resources/sasuke_frente1.png"))) };
+	private JLabel[] sasuke = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
+			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))) };
 
 	/**
 	 * Create the panel.
 	 */
 	public Panel() {
 
-		// somFundo.start();
+		somFundo.start();
 		somFundo.setName("som");
 		sound.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
-					somFundo.stop();
+					somFundo.stopSound();
 
 				} else {
-					somFundo.start();
+					somFundo.startSound();
 					sound.setIcon(on);
 				}
 			}
@@ -132,7 +132,7 @@ public class Panel extends JPanel {
 		// new tocaTrilhaSonora().start();
 		// espera e deifne vez
 		
-		new pecas(kankuro, 1 + 1, 1, "kankuro").start();
+		new pecas(kankuro, 57 + 1, 1, "kankuro").start();
 
 		new pecas(sasuke, 40 + 1, 2, "sasuke").start();
 
