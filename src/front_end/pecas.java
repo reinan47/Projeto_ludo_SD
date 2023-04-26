@@ -1,10 +1,11 @@
 package front_end;
 
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
+import back_end.Jogador;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -14,6 +15,9 @@ public class pecas extends Thread {
 	private int numPlay;
 	private String personagem;
 	private ImageIcon img;
+	private int posX;
+	private int posY;
+	
 	// posições iniciais de origens das peças
 	private int[] initiaKankurolX = { 568, 622, 568, 622 };
 	private int[] initialKankuroY = { 132, 132, 187, 187 };
@@ -59,6 +63,13 @@ public class pecas extends Thread {
 		this.numPlay = numPlay;
 		this.personagem = personagem;
 	}
+	
+	public pecas( String personagem, int posX, int posY) {
+		this.personagem = personagem;
+		this.posX = posX;
+		this.posY = posY;
+	}
+	
 
 	public void run() {
 		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar

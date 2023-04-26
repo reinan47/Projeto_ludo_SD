@@ -7,11 +7,17 @@ import front_end.pecas;
 
 public class Jogador extends Thread  {
     private Socket socket;
+    private pecas peca;
     private int dado;
 
     public Jogador (Socket socket) {
         super();
         this.setSocket(socket);
+    }
+    
+    public Jogador(pecas p, int dado) {
+    	this.peca = p;
+    	this.dado = dado;
     }
 
     public void run() {
@@ -54,6 +60,14 @@ public class Jogador extends Thread  {
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
+
+	public pecas getPeca() {
+		return peca;
+	}
+
+	public void setPeca(pecas peca) {
+		this.peca = peca;
+	}
 
 
 
