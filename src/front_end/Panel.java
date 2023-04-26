@@ -1,5 +1,7 @@
 package front_end;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +29,8 @@ public class Panel extends JPanel {
 	private JButton sound = new JButton();
 
 	private tocaTrilhaSonora somFundo = new tocaTrilhaSonora();
+	
+	private JLabel txtSomFundo = new JLabel("Desativar música");
 
 	private ImageIcon on = new ImageIcon(getClass().getClassLoader().getResource("on.png"));
 	private ImageIcon off = new ImageIcon(getClass().getClassLoader().getResource("off.png"));
@@ -58,15 +62,18 @@ public class Panel extends JPanel {
 	public Panel() {
 
 		somFundo.start();
-		somFundo.setName("som");
 		sound.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
+					txtSomFundo.setBounds(852, 30, 150, 60);
+					txtSomFundo.setText("Ativar música");
 					somFundo.stopSound();
 
 				} else {
+					txtSomFundo.setBounds(840, 30, 150, 60);
+					txtSomFundo.setText("Desativar música");
 					somFundo.startSound();
 					sound.setIcon(on);
 				}
@@ -74,11 +81,15 @@ public class Panel extends JPanel {
 		});
 		setLocale(null);
 		this.setLayout(null);
+		txtSomFundo.setBounds(840, 30, 150, 60);
+		txtSomFundo.setFont(new Font("Russo One", Font.BOLD, 15));
+		txtSomFundo.setBorder(getBorder());
+		add(txtSomFundo);
 		sound.setFocusPainted(false);
 		sound.setContentAreaFilled(false);
 		sound.setOpaque(false);
 		sound.setBorder(null);
-		sound.setBounds(875, 20, 100, 35);
+		sound.setBounds(850, 75, 100, 35);
 		sound.setIcon(on);
 		add(sound);
 
@@ -134,11 +145,11 @@ public class Panel extends JPanel {
 		
 		new pecas(kankuro, 57 + 1, 1, "kankuro").start();
 
-		new pecas(sasuke, 40 + 1, 2, "sasuke").start();
+		new pecas(sasuke, 57 + 1, 2, "sasuke").start();
 
-		new pecas(gaara, 27 + 1, 3, "gaara").start();
+		new pecas(gaara, 57 + 1, 3, "gaara").start();
 
-		new pecas(choji, 14 + 1, 4, "choji").start();
+		new pecas(choji, 57 + 1, 4, "choji").start();
 		
 		
 		//envia depois de mexido
