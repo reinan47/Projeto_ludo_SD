@@ -22,13 +22,27 @@ public class Jogador extends Thread  {
 
     public void run() {
         try{
-            PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader lendo = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          
+            int numAleatorio = this.numAleatorio();
+            String caminho = "C:.\\Projeto_ludo_SD\\numAleatorio.txt";
+            String conteudo = "" + numAleatorio; //transformando em string
+            //criando o arquivo com numero aleatorio
+            FileWriter escrever = new FileWriter(caminho);
+            escrever.write(conteudo);
+            escrever.close();
+            
+            
+            //enviando o arquivo para o servidor
+            File arquivo = new File(caminho);
+            FileInputStream lendo = new FileInputStream(arquivo);
+            OutputStream saida = this.socket.getOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
 
             String inputLine, outputLine;
-            while ((inputLine = lendo.readLine()) != null) {
-                outputLine = "Resposta: " + inputLine;
-                saida.println(outputLine);
+            while ((bytesRead = lendo.read(buffer)) != -1) {
+            	saida.write(buffer, 0, bytesRead);
                 //System.out.println("Recebido do cliente " + socket.getInetAddress().getHostName() + ": " + inputLine);
             }
 
