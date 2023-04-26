@@ -72,6 +72,9 @@ public class pecas extends Thread {
 	
 
 	public void run() {
+		sleep();
+		sleep();
+		sleep();
 		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar
 		jogada(numDado, peca[0], numPlay, personagem);
 		jogada(numDado, peca[1], numPlay, personagem);
@@ -87,7 +90,6 @@ public class pecas extends Thread {
 				Alternar(i, personagem, "frente");
 				if (i <= 5) {
 					posKankuroY += 33;
-					System.out.println("Kankuro"+posKankuroX +" / "+ posKankuroY);
 				}
 				if (i >= 5 && i < 11) {
 					Alternar(i, personagem, "direita");
@@ -187,7 +189,6 @@ public class pecas extends Thread {
 				if (i >= 39 && i <= 44) {
 					Alternar(i, personagem, "frente");
 					posSasukeY += 33;
-					System.out.println("sasuke: "+posSasukeX +" / "+ posSasukeY);
 				}
 				if (i >= 44 && i < 50) {
 					Alternar(i, personagem, "direita");
@@ -239,8 +240,6 @@ public class pecas extends Thread {
 				if (i >= 26 && i <= 31) {
 					Alternar(i, personagem, "frente");
 					posGaaraY += 33;
-					System.out.println("gaara"+posGaaraX +" / "+ posGaaraY);
-
 				}
 				if (i >= 31 && i < 37) {
 					Alternar(i, personagem, "direita");
@@ -292,8 +291,6 @@ public class pecas extends Thread {
 				if (i >= 13 && i <= 18) {
 					Alternar(i, personagem, "frente");
 					posChojiY += 33;
-					System.out.println("choji"+posChojiX +" / "+ posChojiY);
-
 				}
 				if (i >= 18 && i < 24) {
 					Alternar(i, personagem, "direita");

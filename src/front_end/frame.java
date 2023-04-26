@@ -1,5 +1,6 @@
 package front_end;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
@@ -23,7 +24,7 @@ public class frame extends JFrame {
 			@Override
 			public void run() {
 				try {
-					frame frame = new frame();
+					frame frame = new frame();					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -6,10 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import back_end.Jogador;
 
@@ -67,12 +69,14 @@ public class Panel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
-					txtSomFundo.setBounds(852, 30, 150, 60);
+					txtSomFundo.setBounds(847, 44, 100, 30);
+					txtSomFundo.setBackground(Color.GREEN);
 					txtSomFundo.setText("Ativar música");
 					somFundo.stopSound();
 
 				} else {
-					txtSomFundo.setBounds(840, 30, 150, 60);
+					txtSomFundo.setBounds(835, 44, 127, 30);
+					txtSomFundo.setBackground(Color.RED);
 					txtSomFundo.setText("Desativar música");
 					somFundo.startSound();
 					sound.setIcon(on);
@@ -81,10 +85,13 @@ public class Panel extends JPanel {
 		});
 		setLocale(null);
 		this.setLayout(null);
-		txtSomFundo.setBounds(840, 30, 150, 60);
+		txtSomFundo.setBounds(835, 44, 127, 30);
 		txtSomFundo.setFont(new Font("Russo One", Font.BOLD, 15));
-		txtSomFundo.setBorder(getBorder());
+		txtSomFundo.setForeground(Color.BLACK);
+		txtSomFundo.setBorder(BorderFactory.createSoftBevelBorder(0));
+		txtSomFundo.setBackground(Color.RED);
 		add(txtSomFundo);
+		
 		sound.setFocusPainted(false);
 		sound.setContentAreaFilled(false);
 		sound.setOpaque(false);
