@@ -375,7 +375,7 @@ public class pecas extends Thread {
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(250);
+			TimeUnit.MILLISECONDS.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
