@@ -9,6 +9,8 @@ public class Jogador extends Thread  {
     private Socket socket;
     private pecas peca;
     private int dado;
+    private int qtdPercurso = 0;
+    private int qtdPeca = 4;
 
     public Jogador (Socket socket) {
         super();
@@ -71,6 +73,8 @@ public class Jogador extends Thread  {
     public Socket getSocket() {
         return socket;
     }
+    
+    
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
@@ -82,6 +86,24 @@ public class Jogador extends Thread  {
 	public void setPeca(pecas peca) {
 		this.peca = peca;
 	}
+
+	public int getQtdPercurso() {
+		return qtdPercurso;
+	}
+
+	public void setQtdPercurso(int qtdPercurso) {
+		this.qtdPercurso = qtdPercurso;
+	}
+
+	public int getQtdPeca() {
+		return qtdPeca;
+	}
+
+	public void setQtdPeca(int qtdPeca) {
+		this.qtdPeca = qtdPeca;
+	}
+	
+
 
 
 

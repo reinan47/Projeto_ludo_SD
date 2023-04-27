@@ -53,9 +53,12 @@ public class Servidor {
                  /*
                  while(!seacabouojogo) {
                      while(jogada) {
-                         
+                         // o servidor uma requisicao pedindo a jogada do jogadorDaVez
+                         //o servidor recebe a jogada 
                          if(jogou o dado == 6) {
-                            
+                            //se a jogada tiver valida, 
+                            //vai mandar um broadcast com a posicao de todas as pecas
+                             variavel jogada server para o jogador continuar jogando
                          }else if()que a vez dele acabou {
                              jogada = 0
                          }
