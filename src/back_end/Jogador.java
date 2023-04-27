@@ -3,6 +3,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import javax.swing.JLabel;
+
 import front_end.pecas;
 
 public class Jogador extends Thread  {
@@ -11,20 +13,23 @@ public class Jogador extends Thread  {
     private int dado;
     private int qtdPercurso = 0;
     private int qtdPeca = 4;
+    private JLabel p[];
 
     public Jogador (Socket socket) {
         super();
         this.setSocket(socket);
     }
-    
-    public Jogador(pecas p, int dado) {
+
+	public Jogador(pecas p, int dado) {
     	this.peca = p;
     	this.dado = dado;
     }
 
     public void run() {
         try{
-          
+    		//new pecas(p, 57 + 1, 1, "kankuro").start();
+
+    		
             int numAleatorio = this.numAleatorio();
             String caminho = "C:.\\Projeto_ludo_SD\\numAleatorio.txt";
             String conteudo = "" + numAleatorio; //transformando em string

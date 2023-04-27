@@ -75,6 +75,7 @@ public class pecas extends Thread {
 		sleep();
 		sleep();
 		sleep();
+		
 		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar
 		jogada(numDado, peca[0], numPlay, personagem);
 		jogada(numDado, peca[1], numPlay, personagem);

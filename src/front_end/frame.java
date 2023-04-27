@@ -43,6 +43,7 @@ public class frame extends JFrame {
 		
 		setContentPane(contentPane);
 		
+		
 	}
 
 }
