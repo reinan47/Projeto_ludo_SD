@@ -22,7 +22,7 @@ public class frame extends JFrame {
 	private Principal principal = new Principal();
 
 	private JLabel ip = new JLabel("IP");
-	//private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
+	private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
 	private JLabel port = new JLabel("Porta");
 	private JTextField ipValue = new JTextField();
 	
@@ -70,11 +70,11 @@ public class frame extends JFrame {
 		encontrarPartida.setBounds(170, 400, 150, 25);
 		principal.add(encontrarPartida);
 		EventoJogar(principal);
-		//fundo.setBackground(Color.BLACK);
-		//fundo.setText("porta");
+		fundo.setBackground(Color.BLACK);
+		fundo.setText("porta");
 		
 		// parte q add para se conectar a partida
-		//fundo.setBounds(0, 0, 500, 700);
+		fundo.setBounds(0, 0, 500, 700);
 		ipValue.setBackground(new Color(234, 234, 234));
 		ipValue.setHorizontalAlignment(SwingConstants.CENTER);
 		ipValue.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -120,7 +120,7 @@ public class frame extends JFrame {
 		getContentPane().add(ipValue);
 		getContentPane().add(portValue);
 		getContentPane().add(jogar);
-		//getContentPane().add(fundo);
+		getContentPane().add(fundo);
 		
 		EventoEntrarPartida();
 	}
