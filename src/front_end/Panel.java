@@ -69,13 +69,13 @@ public class Panel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (sound.getIcon().equals(on)) {
 					sound.setIcon(off);
-					txtSomFundo.setBounds(847, 44, 100, 30);
+					txtSomFundo.setBounds(852, 44, 95, 13);
 					txtSomFundo.setBackground(Color.GREEN);
 					txtSomFundo.setText("Ativar música");
 					somFundo.stopSound();
 
 				} else {
-					txtSomFundo.setBounds(835, 44, 127, 30);
+					txtSomFundo.setBounds(840, 44, 122, 13);
 					txtSomFundo.setBackground(Color.RED);
 					txtSomFundo.setText("Desativar música");
 					somFundo.startSound();
@@ -85,10 +85,11 @@ public class Panel extends JPanel {
 		});
 		setLocale(null);
 		this.setLayout(null);
-		txtSomFundo.setBounds(835, 44, 127, 30);
+		txtSomFundo.setBounds(840, 44, 122, 13);
 		txtSomFundo.setFont(new Font("Russo One", Font.BOLD, 15));
 		txtSomFundo.setForeground(Color.BLACK);
-		txtSomFundo.setBorder(BorderFactory.createSoftBevelBorder(0));
+		txtSomFundo.setBackground(Color.RED);
+		txtSomFundo.setOpaque(true);
 		txtSomFundo.setBackground(Color.RED);
 		add(txtSomFundo);
 		

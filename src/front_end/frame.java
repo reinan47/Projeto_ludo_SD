@@ -22,7 +22,7 @@ public class frame extends JFrame {
 	private Principal principal = new Principal();
 
 	private JLabel ip = new JLabel("IP");
-	private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
+	//private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
 	private JLabel port = new JLabel("Porta");
 	private JTextField ipValue = new JTextField();
 	
@@ -70,11 +70,11 @@ public class frame extends JFrame {
 		encontrarPartida.setBounds(170, 400, 150, 25);
 		principal.add(encontrarPartida);
 		EventoJogar(principal);
-		fundo.setBackground(Color.BLACK);
-		fundo.setText("porta");
+		//fundo.setBackground(Color.BLACK);
+		//fundo.setText("porta");
 		
 		// parte q add para se conectar a partida
-		fundo.setBounds(0, 0, 500, 700);
+		//fundo.setBounds(0, 0, 500, 700);
 		ipValue.setBackground(new Color(234, 234, 234));
 		ipValue.setHorizontalAlignment(SwingConstants.CENTER);
 		ipValue.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -85,16 +85,16 @@ public class frame extends JFrame {
 		portValue.setBounds(207, 262, 80, 25);
 		ip.setForeground(new Color(0, 0, 0));
 		ip.setToolTipText("");
-		ip.setBackground(Color.BLACK);
 		ip.setFont(new Font("Franklin Gothic Demi Cond", Font.BOLD, 14));
 		ip.setHorizontalAlignment(SwingConstants.CENTER);
+		ip.setForeground(Color.WHITE);
 		
 		ip.setBounds(150, 134, 200, 25);
 		port.setForeground(new Color(0, 0, 0));
 		port.setHorizontalAlignment(SwingConstants.CENTER);
 		port.setFont(new Font("Franklin Gothic Demi Cond", Font.BOLD, 14));
-		port.setBackground(Color.BLACK);
 		port.setBounds(207, 236, 80, 25);
+		port.setForeground(Color.WHITE);
 		
 		ip.setVisible(false);
 		port.setVisible(false);
@@ -120,7 +120,7 @@ public class frame extends JFrame {
 		getContentPane().add(ipValue);
 		getContentPane().add(portValue);
 		getContentPane().add(jogar);
-		getContentPane().add(fundo);
+		//getContentPane().add(fundo);
 		
 		EventoEntrarPartida();
 	}
@@ -145,12 +145,14 @@ public class frame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ipValue.setBounds(150, 162, 200, 25);
 				portValue.setBounds(207, 262, 80, 25);
-				ip.setOpaque(false);
+				ip.setOpaque(true);
+				port.setOpaque(true);
 				ip.setBackground(Color.BLACK);
+				port.setBackground(Color.BLACK);
 				
 				
-				ip.setBounds(240, 122, 25, 50);
-				port.setBounds(230, 215, 35, 50);
+				ip.setBounds(240, 122, 20, 20);
+				port.setBounds(230, 215, 35, 20);
 				ip.setVisible(true);
 				port.setVisible(true);
 				ipValue.setVisible(true);
