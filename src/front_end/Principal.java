@@ -25,14 +25,4 @@ public class Principal extends JPanel{
 		});
 	}
 	
-	public void eventoEncontrarPartida(JButton encontrarPartida) {
-		encontrarPartida.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JInternalFrame jif = new JInternalFrame();
-				
-			}
-		});
-	}
 }
