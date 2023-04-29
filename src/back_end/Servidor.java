@@ -57,10 +57,12 @@ public class Servidor {
 	 }
     
      i = 0;
-     Jogador jogadorDaVez = new Jogador(kankuro, 0);// variavel para armazena o jogador que vai fazer a jogada no round
+     Jogador jogadorDaVez = listJogador.get(0);// variavel para armazena o jogador que vai fazer a jogada no round
      /*
      while(!seacabouojogo) {
+         pedirValorDoDado(jogadorDaVez) 
          while(jogada) {
+         
              // o servidor uma requisicao pedindo a jogada do jogadorDaVez
              //o servidor recebe a jogada 
              if(jogou o dado == 6) {
@@ -80,6 +82,63 @@ public class Servidor {
      }
      */
 
+    }
+    
+    public int pedirValorDoDado(Jogador j) throws IOException {
+    	  Socket socket = j.getSocket();
+    	  int valorDoDado = 0;
+    	  try {
+    		  //escrevendo no arquivo
+    		  String valor = "1";
+    		  File file = new File("arquivo_enviado_cliente.txt");
+    	      file.createNewFile();
+    	      FileWriter fileWriter = new FileWriter(file);
+    	      BufferedWriter escrever = new BufferedWriter(fileWriter);   
+    	      escrever.write(valor);
+    	      
+    	      escrever.close();
+    	      fileWriter.close();
+    	      //enviando o arquivo ao cliente
+    	      OutputStream outputStream = socket.getOutputStream();
+            
+              byte[] buffer = new byte[(int) file.length()];
+              FileInputStream fileInputStream = new FileInputStream(file);
+              BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+              bufferedInputStream.read(buffer, 0, buffer.length);
+              outputStream.write(buffer, 0, buffer.length);
+              outputStream.flush();
+              socket.shutdownOutput();
+              
+              //recebendo a resposta do cliente
+              InputStream inputStream = socket.getInputStream();
+              FileOutputStream fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
+              byte[] bufferRecebimento = new byte[1024];
+              int length;
+              while ((length = inputStream.read(bufferRecebimento)) > 0) {
+                  fileOutputStream.write(bufferRecebimento, 0, length);
+              }
+              //lendo o arquivo que receber do cliente e transformando para int
+              FileReader arq = new FileReader("arquivo_recebido.txt");
+              BufferedReader ler = new BufferedReader(arq);
+              String linha = "";
+            
+              int i = 0;
+              linha = ler.readLine();
+              valorDoDado = Integer.parseInt(linha); 
+              
+              arq.close();
+              fileOutputStream.close();
+              inputStream.close();
+              
+              
+              bufferedInputStream.close();
+              fileInputStream.close();
+              socket.close();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+    	  
+    	  return valorDoDado;
     }
 
 }

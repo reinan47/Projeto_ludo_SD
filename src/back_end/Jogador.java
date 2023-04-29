@@ -1,4 +1,5 @@
 package back_end;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -7,82 +8,103 @@ import javax.swing.JLabel;
 
 import front_end.pecas;
 
-public class Jogador extends Thread  {
-    private Socket socket;
-    private pecas peca;
-    private int dado;
-    private int qtdPercurso = 0;
-    private int qtdPeca = 4;
-    private JLabel p[];
+public class Jogador extends Thread {
+	private Socket socket;
+	private pecas peca;
+	private int dado;
+	private int qtdPercurso = 0;
+	private int qtdPeca = 4;
+	private JLabel p[];
+	private String enderecoNet;
 
-    public Jogador (Socket socket) {
-        super();
-        this.setSocket(socket);
-    }
+	public Jogador(Socket socket) {
+		super();
+		this.setSocket(socket);
+	}
 
 	public Jogador(pecas p, int dado) {
-    	this.peca = p;
-    	this.dado = dado;
-    }
+		this.peca = p;
+		this.dado = dado;
+	}
 
-    public void run() {
-        try{
-    		//new pecas(p, 57 + 1, 1, "kankuro").start();
+	public void enviandoValorDoDado() throws IOException {
+		try {
+			// new pecas(p, 57 + 1, 1, "kankuro").start();
+			Socket socket = new Socket("localhost", this.socket.getPort());
 
-    		
-            int numAleatorio = this.numAleatorio();
-            String caminho = "C:.\\Projeto_ludo_SD\\numAleatorio.txt";
-            String conteudo = "" + numAleatorio; //transformando em string
-            //criando o arquivo com numero aleatorio
-            FileWriter escrever = new FileWriter(caminho);
-            escrever.write(conteudo);
-            escrever.close();
-            
-            
-            //enviando o arquivo para o servidor
-            File arquivo = new File(caminho);
-            FileInputStream lendo = new FileInputStream(arquivo);
-            OutputStream saida = this.socket.getOutputStream();
+			InputStream inputStream = socket.getInputStream();
+			FileOutputStream fileOutputStream = new FileOutputStream("arquivo_enviado_cliente.txt");
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = inputStream.read(buffer)) > 0) {
+				fileOutputStream.write(buffer, 0, length);
+			}
 
-            byte[] buffer = new byte[1024];
-            int bytesRead;
+			FileReader arq = new FileReader("arquivo_enviado_cliente.txt");
+			BufferedReader ler = new BufferedReader(arq);
+			String linha = "";
 
-            String inputLine, outputLine;
-            while ((bytesRead = lendo.read(buffer)) != -1) {
-            	saida.write(buffer, 0, bytesRead);
-                //System.out.println("Recebido do cliente " + socket.getInetAddress().getHostName() + ": " + inputLine);
-            }
+			int i = 0;
+			linha = ler.readLine();
+			int valor = Integer.parseInt(linha);
 
-            saida.close();
-            lendo.close();
-            socket.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+			arq.close();
+			fileOutputStream.close();
+			inputStream.close();
 
-    }
+			if (valor == 1) {
 
-    public int numAleatorio() {
-        Random gerador = new Random();
-        return gerador.nextInt(6) + 1;
-    }
+				int numAleatorio = this.numAleatorio();
+				File file = new File("arquivo_recebido.txt");
+	    	    file.createNewFile();
+	    	    FileWriter fileWriter = new FileWriter(file);
+	    	    BufferedWriter escrever = new BufferedWriter(fileWriter);   
+	    	    escrever.write(numAleatorio);
+	    	      
+	    	    escrever.close();
+	    	    fileWriter.close();
+	    	    byte[] bufferEnvio = new byte[(int) file.length()];
 
-    public int getDado() {
-        return dado;
-    }
+				// enviando o arquivo para o servidor
 
-    public void setDado(int dado) {
-        this.dado = dado;
-    }
+				FileInputStream lendo = new FileInputStream(file);
+				OutputStream saida = this.socket.getOutputStream();
+		        lendo.read(bufferEnvio, 0, bufferEnvio.length);
+	            saida.write(bufferEnvio, 0, bufferEnvio.length);
+	            saida.flush();
+	            socket.shutdownOutput();
+				saida.close();
+				lendo.close();
+			}
 
-    public Socket getSocket() {
-        return socket;
-    }
-    
-    
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
+			
+			socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public int numAleatorio() {
+		Random gerador = new Random();
+		return gerador.nextInt(6) + 1;
+	}
+
+	public int getDado() {
+		return dado;
+	}
+
+	public void setDado(int dado) {
+		this.dado = dado;
+	}
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
 
 	public pecas getPeca() {
 		return peca;
@@ -107,9 +129,5 @@ public class Jogador extends Thread  {
 	public void setQtdPeca(int qtdPeca) {
 		this.qtdPeca = qtdPeca;
 	}
-	
-
-
-
 
 }
