@@ -29,9 +29,9 @@ public class Jogador extends Thread {
 
 	public void enviandoValorDoDado() throws IOException {
 		try {
-			// new pecas(p, 57 + 1, 1, "kankuro").start();
+			
 			Socket socket = new Socket("localhost", this.socket.getPort());
-
+            //lendo o arquivo e escutando
 			InputStream inputStream = socket.getInputStream();
 			FileOutputStream fileOutputStream = new FileOutputStream("arquivo_enviado_cliente.txt");
 			byte[] buffer = new byte[1024];
@@ -51,7 +51,7 @@ public class Jogador extends Thread {
 			arq.close();
 			fileOutputStream.close();
 			inputStream.close();
-
+            // quer dizer que o jogador recebeu a requisicao e pode jogar
 			if (valor == 1) {
 
 				int numAleatorio = this.numAleatorio();
