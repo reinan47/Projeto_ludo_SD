@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
@@ -17,6 +19,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
+import back_end.Servidor;
+
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -28,6 +34,7 @@ public class frame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Principal principal = new Principal();
+	private Servidor server = new Servidor();
 
 	private JLabel ip = new JLabel("IP");
 	private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
@@ -35,12 +42,10 @@ public class frame extends JFrame {
 	private JTextField ipValue = new JTextField();
 
 	private JTextField portValue = new JTextField();
-
 	private JButton criarPartida = new JButton(
 			new ImageIcon(frame.class.getClassLoader().getResource("criar_partida .png")));
 	private JButton encontrarPartida = new JButton(
 			new ImageIcon(frame.class.getClassLoader().getResource("entrar_partida.png")));
-	private JButton jogar = new JButton(new ImageIcon(frame.class.getClassLoader().getResource("jogar.png")));
 
 	/**
 	 * Launch the application.
@@ -98,33 +103,29 @@ public class frame extends JFrame {
 		portValue.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		ip.setForeground(new Color(0, 0, 0));
 		ip.setToolTipText("");
-		ip.setFont(new Font("Franklin Gothic Demi Cond", Font.BOLD, 18));
+		ip.setFont(new Font("Chewy", Font.BOLD, 18));
 		ip.setHorizontalAlignment(SwingConstants.CENTER);
 		ip.setForeground(Color.BLACK);
 		ip.setBounds(150, 134, 200, 25);
 
 		port.setForeground(new Color(0, 0, 0));
 		port.setHorizontalAlignment(SwingConstants.CENTER);
-		port.setFont(new Font("Franklin Gothic Demi Cond", Font.BOLD, 18));
+		port.setFont(new Font("Chewy", Font.BOLD, 18));
 		port.setBounds(207, 236, 80, 25);
 
-		ip.setVisible(false);
-		port.setVisible(false);
-		ipValue.setVisible(false);
-		portValue.setVisible(false);
-		jogar.setVisible(false);
+		ipValue.setBounds(150, 192, 200, 25);
+		portValue.setBounds(207, 292, 80, 25);
+		ip.setOpaque(false);
+		port.setOpaque(false);
 
-		jogar.setFocusPainted(false);
-		jogar.setContentAreaFilled(false);
-		jogar.setOpaque(false);
-		jogar.setBorder(null);
-		jogar.setBounds(193, 310, 100, 40);
+		ip.setBounds(240, 167, 20, 20);
+		port.setBounds(222, 265, 50, 20);
+
 
 		getContentPane().add(ip);
 		getContentPane().add(port);
 		getContentPane().add(ipValue);
 		getContentPane().add(portValue);
-		getContentPane().add(jogar);
 		getContentPane().add(fundo);
 
 		EventoEntrarPartida();
@@ -137,9 +138,12 @@ public class frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Panel contentPane = new Panel();
-				principal.eventoJogar(criarPartida);
-				setContentPane(contentPane);
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setBounds(150, 10, 1000, 700);
+				contentPane.repaint();
+				contentPane.revalidate();
+				setContentPane(contentPane);
+
 				// implementar logica para startar server
 
 			}
@@ -150,27 +154,7 @@ public class frame extends JFrame {
 		encontrarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ipValue.setBounds(150, 142, 200, 25);
-				portValue.setBounds(207, 242, 80, 25);
-				ip.setOpaque(false);
-				port.setOpaque(false);
 
-				ip.setBounds(240, 117, 20, 20);
-				port.setBounds(222, 215, 50, 20);
-				ip.setVisible(true);
-				port.setVisible(true);
-				ipValue.setVisible(true);
-				portValue.setVisible(true);
-				jogar.setVisible(true);
-			}
-		});
-	}
-
-	public void EventoJogarPorIpPort() {
-		jogar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// implementar pra entrar por porta e ip
 			}
 		});
 	}
@@ -251,37 +235,6 @@ public class frame extends JFrame {
 
 			}
 		});
-		jogar.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				somClick();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				jogar.setBounds(193, 310, 100, 40);
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				jogar.setBounds(193, 305, 100, 40);
-				somHover();
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void somClick() {
@@ -289,6 +242,7 @@ public class frame extends JFrame {
 		AudioClip audio = Applet.newAudioClip(url);
 		audio.play();
 	}
+
 	public void somHover() {
 		URL url = getClass().getClassLoader().getResource("hover.wav");
 		AudioClip audio = Applet.newAudioClip(url);

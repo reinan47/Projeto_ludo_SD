@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
@@ -83,6 +85,7 @@ public class Panel extends JPanel {
 				}
 			}
 		});
+		
 		setLocale(null);
 		this.setLayout(null);
 		txtSomFundo.setBounds(840, 44, 122, 13);
@@ -151,7 +154,7 @@ public class Panel extends JPanel {
 		// new tocaTrilhaSonora().start();
 		// espera e deifne vez
 		
-		new pecas(kankuro, 57 + 1, 1, "kankuro").start();
+		//new pecas(kankuro, 57 + 1, 1, "kankuro").start();
 
 		new pecas(sasuke, 57 + 1, 2, "sasuke").start();
 

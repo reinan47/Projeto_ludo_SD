@@ -17,10 +17,7 @@ public class Principal extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Panel contentPane = new Panel();
-				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-				contentPane.revalidate();
-				contentPane.repaint();
+
 			}
 		});
 	}
