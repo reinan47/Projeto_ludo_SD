@@ -8,13 +8,22 @@ import front_end.pecas;
 
 public class Servidor {
      static ServerSocket serverSocket = null;
-     private static List<Jogador> listJogador;
+     private static List<Jogador> listJogador = new ArrayList<>();
+     private static int port = 8000;
 
+     public static void main(String[] args) {
+ 		try {
+ 			ServidorJogada();
+ 		} catch (Exception e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
 
-    public static void ServidorJogada(pecas peca[]) throws IOException {
+    public static void ServidorJogada() throws IOException {
 
         try {
-            serverSocket = new ServerSocket(8000);
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println("Não foi possível escutar na porta 8000.");
             System.exit(-1);
@@ -24,6 +33,10 @@ public class Servidor {
         pecas sasuke = new pecas("sasuke", 0, 0);
         pecas gaara = new pecas("gaara", 0, 0);
         pecas choji = new pecas("choji", 0, 0);
+        kankuro.start();
+        sasuke.start();
+        gaara.start();
+        choji.start();
         //criando variavel para armazena no vetor e atribuir os jogadores
         pecas[] armazena = {kankuro, sasuke, gaara, choji};
         
@@ -34,12 +47,13 @@ public class Servidor {
             //BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
              Jogador j = new Jogador(serverSocket.accept());
+             System.out.println("Entrou");
              listJogador.add(j);
              //criar metodo ao inves de thread
              //j.start();
              
              if(listJogador.size() == 2) {
-            	 serverSocket.setSoTimeout(5000);
+            	 serverSocket.setSoTimeout(50000);
              }
              
 
@@ -151,8 +165,9 @@ public class Servidor {
               outputStream.flush();
               socket.shutdownOutput();
               
+              j.enviandoValorDoDado();
               //recebendo a resposta do cliente
-              InputStream inputStream = socket.getInputStream();
+              InputStream inputStream = j.getInputStream();
               FileOutputStream fileOutputStream = new FileOutputStream("arquivo_recebido_jogada.txt");
               byte[] bufferRecebimento = new byte[1024];
               int length;
@@ -183,7 +198,7 @@ public class Servidor {
     	  return valorDoDado;
     }
     //ENVIAR INFORMACAOES PARA TODOS OS JOGADORES ATUALIZAREM A TELA
-    public static void EnviarBroadCast(List<Jogador> listJogador) {
+   /* public static void EnviarBroadCast(List<Jogador> listJogador) {
     	 DatagramSocket servidor = new DatagramSocket(5000);
     	 
 
@@ -212,6 +227,6 @@ public class Servidor {
              }
              contJogador++;
          }
-    }
+    }*/
 
 }

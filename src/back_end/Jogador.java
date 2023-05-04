@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import front_end.pecas;
 
 public class Jogador extends Thread {
-	private Socket socket;
+	private static Socket socket;
 	private pecas peca;
 	private int dado;
 	private int qtdPercurso = 0;
@@ -30,16 +30,29 @@ public class Jogador extends Thread {
 		this.dado = dado;
 	}
 
+	public static void main(String[] args) {
+		System.out.println("foi");
+		try {
+			socket = new Socket("127.0.0.1", 8000);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void enviandoValorDoDado() throws IOException {
 		try {
-			
+
 			Socket socket = new Socket(this.getEnderecoNet(), this.getPort());
-            //lendo o arquivo e escutando
-			InputStream inputStream = socket.getInputStream();
+			
+			// lendo o arquivo e escutando
 			FileOutputStream fileOutputStream = new FileOutputStream("arquivo_enviado_cliente.txt");
 			byte[] buffer = new byte[1024];
 			int length;
-			while ((length = inputStream.read(buffer)) > 0) {
+			while ((length = this.inputStream.read(buffer)) > 0) {
 				fileOutputStream.write(buffer, 0, length);
 			}
 
@@ -54,33 +67,31 @@ public class Jogador extends Thread {
 			arq.close();
 			fileOutputStream.close();
 			inputStream.close();
-            // quer dizer que o jogador recebeu a requisicao e pode jogar
+			// quer dizer que o jogador recebeu a requisicao e pode jogar
 			if (valor == 1) {
 
 				int numAleatorio = this.numAleatorio();
 				File file = new File("arquivo_recebido.txt");
-	    	    file.createNewFile();
-	    	    FileWriter fileWriter = new FileWriter(file);
-	    	    BufferedWriter escrever = new BufferedWriter(fileWriter);   
-	    	    escrever.write(numAleatorio);
-	    	      
-	    	    escrever.close();
-	    	    fileWriter.close();
-	    	    byte[] bufferEnvio = new byte[(int) file.length()];
+				file.createNewFile();
+				FileWriter fileWriter = new FileWriter(file);
+				BufferedWriter escrever = new BufferedWriter(fileWriter);
+				escrever.write(numAleatorio);
 
+				escrever.close();
+				fileWriter.close();
+				byte[] bufferEnvio = new byte[(int) file.length()];
+				
 				// enviando o arquivo para o servidor
-
 				FileInputStream lendo = new FileInputStream(file);
-				OutputStream saida = this.socket.getOutputStream();
-		        lendo.read(bufferEnvio, 0, bufferEnvio.length);
-	            saida.write(bufferEnvio, 0, bufferEnvio.length);
-	            saida.flush();
-	            socket.shutdownOutput();
+				OutputStream saida = this.getOutputStream();
+				lendo.read(bufferEnvio, 0, bufferEnvio.length);
+				saida.write(bufferEnvio, 0, bufferEnvio.length);
+				saida.flush();
+				socket.shutdownOutput();
 				saida.close();
 				lendo.close();
 			}
 
-			
 			socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();

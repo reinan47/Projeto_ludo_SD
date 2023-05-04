@@ -75,10 +75,10 @@ public class pecas extends Thread {
 
 
 		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar
-		jogada(numDado, peca[0], numPlay, personagem);
-		jogada(numDado, peca[1], numPlay, personagem);
-		jogada(numDado, peca[2], numPlay, personagem);
-		jogada(numDado, peca[3], numPlay, personagem);
+		//jogada(numDado, peca[0], numPlay, personagem);
+		//jogada(numDado, peca[1], numPlay, personagem);
+		//jogada(numDado, peca[2], numPlay, personagem);
+		//jogada(numDado, peca[3], numPlay, personagem);
 	}
 	
 	public void jogada(int numDado, JLabel peca, int numPlay, String personagem) {
