@@ -59,6 +59,8 @@ public class Panel extends JPanel {
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))) };
+	private final JButton btnNewButton = new JButton("New button");
+	private final JButton btnNewButton_1 = new JButton("New button");
 
 	/**
 	 * Create the panel.
@@ -147,6 +149,22 @@ public class Panel extends JPanel {
 		add(tabuleiro);
 		add(logo);
 		add(fundo);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				//
+				
+				//jogada(0, peca[0], numPlay, personagem);
+				
+			}
+		});
+		btnNewButton.setBounds(71, 74, 89, 23);
+		
+		add(btnNewButton);
+		btnNewButton_1.setBounds(101, 124, 89, 23);
+		
+		add(btnNewButton_1);
 		// de acordo com a resposta do servidor que virá aki será direcionado
 		// um vetor com as pecas para uma thread, que moverá a peca de acordo com a
 		// jogada,
@@ -154,13 +172,13 @@ public class Panel extends JPanel {
 		// new tocaTrilhaSonora().start();
 		// espera e deifne vez
 		
-		//new pecas(kankuro, 57 + 1, 1, "kankuro").start();
+		new pecas(kankuro, 57 + 1, 1, "kankuro").start();
 
-		new pecas(sasuke, 57 + 1, 2, "sasuke").start();
+		//new pecas(sasuke, 57 + 1, 2, "sasuke").start();
 
-		new pecas(gaara, 57 + 1, 3, "gaara").start();
+		//new pecas(gaara, 57 + 1, 3, "gaara").start();
 
-		new pecas(choji, 57 + 1, 4, "choji").start();
+		//new pecas(choji, 57 + 1, 4, "choji").start();
 		
 		
 		//envia depois de mexido

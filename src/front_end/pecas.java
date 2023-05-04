@@ -74,8 +74,8 @@ public class pecas extends Thread {
 	public void run() {
 
 
-		// aqui será escolhido a peça que será movimentada e o jogador que irá jogar
-		//jogada(numDado, peca[0], numPlay, personagem);
+		//aqui será escolhido a peça que será movimentada e o jogador que irá jogar
+		//jogada(0, peca[0], numPlay, personagem);
 		//jogada(numDado, peca[1], numPlay, personagem);
 		//jogada(numDado, peca[2], numPlay, personagem);
 		//jogada(numDado, peca[3], numPlay, personagem);

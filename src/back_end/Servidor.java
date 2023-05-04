@@ -41,12 +41,15 @@ public class Servidor {
         pecas[] armazena = {kankuro, sasuke, gaara, choji};
         
         
-     try {   
+     try {  
+    	
         while(listJogador.size() < 4) {
             //PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
             //BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
-             Jogador j = new Jogador(serverSocket.accept());
+        	
+             Jogador j = new Jogador( serverSocket.accept());
+             
              System.out.println("Entrou");
              listJogador.add(j);
              //criar metodo ao inves de thread

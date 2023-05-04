@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import front_end.pecas;
 
-public class Jogador extends Thread {
+public class Jogador extends Thread{
 	private static Socket socket;
 	private pecas peca;
 	private int dado;
@@ -21,15 +21,37 @@ public class Jogador extends Thread {
 	private InputStream inputStream;
 
 	public Jogador(Socket socket) {
-		super();
+		//super();
 		this.setSocket(socket);
 	}
-
+	
 	public Jogador(pecas p, int dado) {
 		this.peca = p;
 		this.dado = dado;
 	}
 
+	
+	public void run() {
+		
+		while(true)
+		{
+		
+		// aguardando comando do servidor
+		
+		//se for 1
+		
+				//ativa o botao do dado
+				//atualiza a mensagem para visar o cara jogar
+				
+		// se for 2
+				//receber os dados enviado pelo servidor contendo a atualizacao da jogada do oponente
+		
+		
+		}
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		System.out.println("foi");
 		try {

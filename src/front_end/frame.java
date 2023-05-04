@@ -11,9 +11,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import javax.sound.sampled.Port;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import back_end.Jogador;
 import back_end.Servidor;
 
 import javax.swing.JTextField;
@@ -48,6 +54,9 @@ public class frame extends JFrame {
 	private JButton encontrarPartida = new JButton(
 			new ImageIcon(frame.class.getClassLoader().getResource("entrar_partida.png")));
 
+	Jogador j;
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -96,12 +105,14 @@ public class frame extends JFrame {
 		ipValue.setBackground(new Color(234, 234, 234));
 		ipValue.setHorizontalAlignment(SwingConstants.CENTER);
 		ipValue.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		ipValue.setText("127.0.0.1");
 
 		ipValue.setBounds(150, 162, 200, 25);
 		portValue.setBackground(new Color(234, 234, 234));
 		portValue.setHorizontalAlignment(SwingConstants.CENTER);
 		portValue.setBounds(207, 262, 80, 25);
 		portValue.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		portValue.setText("8000");
 		ip.setForeground(new Color(0, 0, 0));
 		ip.setToolTipText("");
 		ip.setFont(new Font("Chewy", Font.BOLD, 18));
@@ -131,6 +142,11 @@ public class frame extends JFrame {
 
 		EventoEntrarPartida();
 		EventoJogar(principal);
+		
+		JButton button = new JButton("New button");
+		button.setBounds(39, 99, 89, 23);
+		principal.add(button);
+		
 		EventosMouse();
 	}
 
@@ -144,11 +160,20 @@ public class frame extends JFrame {
 				contentPane.repaint();
 				contentPane.revalidate();
 				setContentPane(contentPane);
+				///implementar logica para startar server
+				System.out.printf(ipValue.getText() +"/"+ portValue.getText());
+				try {
+					Socket s = new Socket(ipValue.getText(), Integer.parseInt(portValue.getText()));
+					j = new Jogador(s);
+				} catch (NumberFormatException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
-				// implementar logica para startar server
 
 			}
 		});
+		
 	}
 
 	public void EventoEntrarPartida() {
