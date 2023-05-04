@@ -66,8 +66,8 @@ public class pecas extends Thread {
 	
 	public pecas( String personagem, int posX, int posY) {
 		this.personagem = personagem;
-		this.posX = posX;
-		this.posY = posY;
+		this.setPosX(posX);
+		this.setPosY(posY);
 	}
 	
 
@@ -379,5 +379,21 @@ public class pecas extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 }

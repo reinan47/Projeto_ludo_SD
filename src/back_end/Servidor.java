@@ -58,33 +58,75 @@ public class Servidor {
     
      i = 0;
      Jogador jogadorDaVez = listJogador.get(0);// variavel para armazena o jogador que vai fazer a jogada no round
-     /*
-     while(!seacabouojogo) {
-         pedirValorDoDado(jogadorDaVez) 
-         while(jogada) {
-         
+     int valorDoDado;
+     while(AcabouOJogo(listJogador) == false) {
+         valorDoDado = PedirValorDoDado(jogadorDaVez);
+         boolean jogada = true;
+         while(jogada == true) {
+        	 int contValorSeis = 0;
              // o servidor uma requisicao pedindo a jogada do jogadorDaVez
              //o servidor recebe a jogada 
-             if(jogou o dado == 6) {
+             if(valorDoDado == 6) {
+            	 contValorSeis++;
                 //se a jogada tiver valida, 
                 //vai mandar um broadcast com a posicao de todas as pecas
-                 variavel jogada server para o jogador continuar jogando
-             }else if()que a vez dele acabou {
-                 jogada = 0
+            	 if(contValorSeis == 3) {
+            		 jogada = false;
+            	 }else {
+            		 jogadorDaVez.setQtdPercurso(valorDoDado);
+            		 if(jogadorDaVez.getQtdPercurso() == 57 && jogadorDaVez.getQtdPeca() > 0) {//QUANDO UMA PECA CHEGAR AO PERCURSO MAXIMO QUE E 57
+            			 jogadorDaVez.setQtdPeca();
+            		 }
+            		 //verificarAtaque
+            		 
+                     jogada = true;
+            	 }
+            	
+                 
+             }else if(valorDoDado != 6){
+            	 jogadorDaVez.setQtdPercurso(valorDoDado);
+            	 if(jogadorDaVez.getQtdPercurso() == 57 && jogadorDaVez.getQtdPeca() > 0) {//QUANDO UMA PECA CHEGAR AO PERCURSO MAXIMO QUE E 57
+        			 jogadorDaVez.setQtdPeca();
+        		 }
+            	 //verificarAtaque
+            	 jogada = false;
+                     
              }
          }
+         //enivar broadcast com as informacoes de todos o jogadores
          i++;
          // no caso do incremento passar de 4, ja que só possuem 4 jogadores.
          if(i > 4) { 
         	 i = 0;
          }
-         jogadorDaVez = listJogador.get(i); //mudar o jogador para jogar naquele round
+       //mudar o jogador para jogar naquele round
+         jogadorDaVez = listJogador.get(i); 
      }
-     */
+     
 
     }
     
-    public int pedirValorDoDado(Jogador j) throws IOException {
+    public static boolean AcabouOJogo(List<Jogador> listJogador) {
+    	 for(Jogador jogador : listJogador) {
+    		if(jogador.getQtdPeca() == 0) {
+    			return true;
+    		}
+    	 }
+    	 return false;
+    }
+    
+    public static boolean Ataque(List<Jogador> listJogador, Jogador jogadorDaVez) {
+		for (Jogador jogador : listJogador) {
+			if (!jogadorDaVez.equals(jogador))//para nao pegar o mesmo jogador que esta na lista
+				if (jogador.getPeca().getPosX() == jogadorDaVez.getPeca().getPosX()
+						&& jogador.getPeca().getPosY() == jogadorDaVez.getPeca().getPosY()) {
+					return true;
+				}
+		}
+		return false;
+    }
+    
+    public static int PedirValorDoDado(Jogador j) throws IOException {
     	  Socket socket = j.getSocket();
     	  int valorDoDado = 0;
     	  try {
@@ -111,14 +153,14 @@ public class Servidor {
               
               //recebendo a resposta do cliente
               InputStream inputStream = socket.getInputStream();
-              FileOutputStream fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
+              FileOutputStream fileOutputStream = new FileOutputStream("arquivo_recebido_jogada.txt");
               byte[] bufferRecebimento = new byte[1024];
               int length;
               while ((length = inputStream.read(bufferRecebimento)) > 0) {
                   fileOutputStream.write(bufferRecebimento, 0, length);
               }
               //lendo o arquivo que receber do cliente e transformando para int
-              FileReader arq = new FileReader("arquivo_recebido.txt");
+              FileReader arq = new FileReader("arquivo_recebido_jogada.txt");
               BufferedReader ler = new BufferedReader(arq);
               String linha = "";
             
@@ -139,6 +181,37 @@ public class Servidor {
           }
     	  
     	  return valorDoDado;
+    }
+    //ENVIAR INFORMACAOES PARA TODOS OS JOGADORES ATUALIZAREM A TELA
+    public static void EnviarBroadCast(List<Jogador> listJogador) {
+    	 DatagramSocket servidor = new DatagramSocket(5000);
+    	 
+
+    	 int numBytesLidos;
+    	 int contJogador = 0;
+    	 //escrevendo no arquivo
+		  String valor = "1";
+		  File file = new File("arquivo_enviado_cliente.txt");
+	      file.createNewFile();
+	      FileWriter fileWriter = new FileWriter(file);
+	      BufferedWriter escrever = new BufferedWriter(fileWriter);   
+	      escrever.write(valor);
+	      
+	      escrever.close();
+	      fileWriter.close();
+	     byte[] bufferArquivo = new byte[1024];
+
+         while ((numBytesLidos = file.read(bufferArquivo)) > 0) {
+             // Cria um pacote para enviar os dados do arquivo
+             DatagramPacket pacoteArquivo = new DatagramPacket(bufferArquivo, numBytesLidos);
+             OutputStream saida = listJogador.get(contJogador).getOutputStream();
+             // Envia o pacote para todos os clientes conectados
+             for (InetSocketAddress Jogador : ) {
+                 pacoteArquivo.setSocketAddress(cliente);
+                 servidor.send(pacoteArquivo);
+             }
+             contJogador++;
+         }
     }
 
 }

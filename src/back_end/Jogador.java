@@ -16,6 +16,9 @@ public class Jogador extends Thread {
 	private int qtdPeca = 4;
 	private JLabel p[];
 	private String enderecoNet;
+	private int port;
+	private OutputStream outputStream;
+	private InputStream inputStream;
 
 	public Jogador(Socket socket) {
 		super();
@@ -30,7 +33,7 @@ public class Jogador extends Thread {
 	public void enviandoValorDoDado() throws IOException {
 		try {
 			
-			Socket socket = new Socket("localhost", this.socket.getPort());
+			Socket socket = new Socket(this.getEnderecoNet(), this.getPort());
             //lendo o arquivo e escutando
 			InputStream inputStream = socket.getInputStream();
 			FileOutputStream fileOutputStream = new FileOutputStream("arquivo_enviado_cliente.txt");
@@ -119,15 +122,47 @@ public class Jogador extends Thread {
 	}
 
 	public void setQtdPercurso(int qtdPercurso) {
-		this.qtdPercurso = qtdPercurso;
+		this.qtdPercurso += qtdPercurso;
 	}
 
 	public int getQtdPeca() {
 		return qtdPeca;
 	}
 
-	public void setQtdPeca(int qtdPeca) {
-		this.qtdPeca = qtdPeca;
+	public void setQtdPeca() {
+		this.qtdPeca -= 1;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getEnderecoNet() {
+		return enderecoNet;
+	}
+
+	public void setEnderecoNet(String enderecoNet) {
+		this.enderecoNet = enderecoNet;
+	}
+
+	public OutputStream getOutputStream() {
+		return outputStream;
+	}
+
+	public void setOutputStream(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 
 }
