@@ -1,6 +1,7 @@
 package front_end;
 
 
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
@@ -17,6 +18,8 @@ public class pecas extends Thread {
 	private ImageIcon img;
 	private int posX;
 	private int posY;
+	private int percurso;
+	private int numPeca;
 	
 	// posições iniciais de origens das peças
 	private int[] initiaKankurolX = { 568, 622, 568, 622 };
@@ -44,8 +47,8 @@ public class pecas extends Thread {
 	private int saidaChojiX = 216;
 	private int saidaChojiY = 280;
 	// variaveis resposaveis por se movimentar no tabuleiro
-	private int posKankuroX;
-	private int posKankuroY;
+	private int posKankuroX = saidaKankuroX;
+	private int posKankuroY = saidaKankuroY;
 
 	private int posSasukeX;
 	private int posSasukeY;
@@ -56,12 +59,14 @@ public class pecas extends Thread {
 	private int posChojiX;
 	private int posChojiY;
 
-	public pecas(JLabel peca[], int numDado, int numPlay, String personagem) {
+	public pecas(JLabel peca[], int numDado, int numPlay, String personagem, int percurso, int numPeca) {
 		super();
 		this.peca = peca;
 		this.numDado = numDado;
 		this.numPlay = numPlay;
 		this.personagem = personagem;
+		this.percurso = percurso;
+		this.numPeca = numPeca;
 	}
 	
 	public pecas( String personagem, int posX, int posY) {
@@ -72,78 +77,78 @@ public class pecas extends Thread {
 	
 
 	public void run() {
+		//while(true) {
+			//as thread ficam escultando e recebendo os valores do server aqui
+			jogada(numDado, peca[this.numPeca], numPlay, personagem, this.percurso);
+			sleep();sleep();sleep();sleep();sleep();
+			jogada(numDado, peca[this.numPeca], numPlay, personagem, this.percurso);
+		//}
 
-
-		//aqui será escolhido a peça que será movimentada e o jogador que irá jogar
-		//jogada(0, peca[0], numPlay, personagem);
-		//jogada(numDado, peca[1], numPlay, personagem);
-		//jogada(numDado, peca[2], numPlay, personagem);
-		//jogada(numDado, peca[3], numPlay, personagem);
 	}
 	
-	public void jogada(int numDado, JLabel peca, int numPlay, String personagem) {
+	public void jogada(int numDado, JLabel peca, int numPlay, String personagem, int percurso) {
 		if (numPlay == 1) {
-			posKankuroX = saidaKankuroX;
-			posKankuroY = saidaKankuroY;
-			for (int i = 0; i < numDado; i++) {
+			percurso = this.percurso;
+			for (int i = 1; i <= numDado; i++) {
 				Alternar(i, personagem, "frente");
-				if (i <= 5) {
+				if (percurso <= 5) {
 					posKankuroY += 33;
 				}
-				if (i >= 5 && i < 11) {
+				if (percurso >= 5 && percurso < 11) {
 					Alternar(i, personagem, "direita");
 					posKankuroX += 33;
 				}
-				if (i >= 11 && i < 13) {
+				if (percurso >= 11 && percurso < 13) {
 					Alternar(i, personagem, "frente");
 					posKankuroY += 33;
 				}
-				if (i >= 13 && i <= 18) {
+				if (percurso >= 13 && percurso <= 18) {
 					Alternar(i, personagem, "esquerda");
 					posKankuroX -= 33;
 				}
-				if (i >= 18 && i < 24) {
+				if (percurso >= 18 && percurso < 24) {
 					Alternar(i, personagem, "frente");
 					posKankuroY += 33;
 				}
-				if (i >= 24 && i < 26) {
+				if (percurso >= 24 && percurso < 26) {
 					Alternar(i, personagem, "esquerda");
 					posKankuroX -= 33;
 				}
-				if (i >= 26 && i <= 31) {
+				if (percurso >= 26 && percurso <= 31) {
 					Alternar(i, personagem, "costa");
 					posKankuroY -= 33;
 				}
-				if (i >= 31 && i < 37) {
+				if (percurso >= 31 && percurso < 37) {
 					Alternar(i, personagem, "esquerda");
 					posKankuroX -= 33;
 				}
-				if (i >= 37 && i < 39) {
+				if (percurso >= 37 && percurso < 39) {
 					Alternar(i, personagem, "costa");
 					posKankuroY -= 33;
 				}
-				if (i >= 39 && i <= 44) {
+				if (percurso >= 39 && percurso <= 44) {
 					Alternar(i, personagem, "direita");
 					posKankuroX += 33;
 				}
-				if (i >= 44 && i < 50) {
+				if (percurso >= 44 && percurso < 50) {
 					Alternar(i, personagem, "costa");
 					posKankuroY -= 33;
 				}
-				if (i >= 50 && i < 51) {
+				if (percurso >= 50 && percurso < 51) {
 					Alternar(i, personagem, "direita");
 					posKankuroX += 33;
 				}
-				if (i >= 51 && i < 57) {
+				if (percurso >= 51 && percurso < 57) {
 					Alternar(i, personagem, "frente");
 					posKankuroY += 33;
 				}
 				sleep();
 				peca.setIcon(img);
 				peca.setLocation(posKankuroX, posKankuroY);
-				if (i == 57) {
+				if (percurso == 57) {
 					Ataque(peca, personagem);
 				}
+				percurso += i;
 			}
 		} else if (numPlay == 2) {
 			posSasukeX = saidaSasukeX;

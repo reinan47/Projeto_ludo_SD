@@ -12,7 +12,7 @@ public class Jogador extends Thread{
 	private static Socket socket;
 	private pecas peca;
 	private int dado;
-	private int qtdPercurso = 0;
+	private static int qtdPercurso = 0;
 	private int qtdPeca = 4;
 	private JLabel p[];
 	private String enderecoNet;

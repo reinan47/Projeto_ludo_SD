@@ -33,10 +33,7 @@ public class Servidor {
         pecas sasuke = new pecas("sasuke", 0, 0);
         pecas gaara = new pecas("gaara", 0, 0);
         pecas choji = new pecas("choji", 0, 0);
-        kankuro.start();
-        sasuke.start();
-        gaara.start();
-        choji.start();
+
         //criando variavel para armazena no vetor e atribuir os jogadores
         pecas[] armazena = {kankuro, sasuke, gaara, choji};
         

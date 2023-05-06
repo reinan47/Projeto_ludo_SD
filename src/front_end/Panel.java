@@ -169,16 +169,16 @@ public class Panel extends JPanel {
 		// um vetor com as pecas para uma thread, que moverá a peca de acordo com a
 		// jogada,
 		// que o servidor sorteará.
-		// new tocaTrilhaSonora().start();
 		// espera e deifne vez
 		
-		new pecas(kankuro, 57 + 1, 1, "kankuro").start();
+		new pecas(kankuro, 5, 1, "kankuro", 0, 1).start();
+		//new pecas(kankuro, 6, 1, "kankuro", 11, 1).start();
 
-		//new pecas(sasuke, 57 + 1, 2, "sasuke").start();
+		//new pecas(sasuke, 0, 2, "sasuke").start();
 
-		//new pecas(gaara, 57 + 1, 3, "gaara").start();
+		//new pecas(gaara, 0, 3, "gaara").start();
 
-		//new pecas(choji, 57 + 1, 4, "choji").start();
+		//new pecas(choji, 0, 4, "choji").start();
 		
 		
 		//envia depois de mexido
