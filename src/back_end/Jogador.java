@@ -40,104 +40,80 @@ public class Jogador extends Thread{
 		while(true)
 		{
 		    int bytesLidos = 0;
-			try {
-				inputStream = socket.getInputStream();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			inputStream = socket.getInputStream();
+			
 	        byte[] buffer = new byte[1024];
-			try {
-				bytesLidos = inputStream.read(buffer);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			bytesLidos = inputStream.read(buffer);
+			
 	        requisicao = new String(buffer, 0, bytesLidos);
 	        System.out.println("Servidor diz: " +requisicao);
 	        
 	        if(requisicao == "1") {
 	        	//faz a jogada e escrever em um arquivo
-	        	//sorteia o dado
-	        	//chama a funcao jogada
-	        	
-	        	//enviando o arquivo de jogada para o servidor
-				try {
-					outputStream = socket.getOutputStream();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				// sorteia o dado
+				// chama a funcao jogada
+
+				// enviando o arquivo de jogada para o servidor
+
+				outputStream = socket.getOutputStream();//usado para mandar o arquivo via socket
+
+				// criando arquivo
+
+				fileInputStream = new FileInputStream("arquivo_cliente_jogada.txt");
+
+				while ((bytesLidos = fileInputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesLidos);
+
 				}
-                //criando arquivo
-				try {
-					fileInputStream = new FileInputStream("arquivo_cliente_jogada.txt");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-					try {
-						while ((bytesLidos = fileInputStream.read(buffer)) != -1) {	
-								outputStream.write(buffer, 0, bytesLidos);
-							
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 			
 	        	
 	        }else if(requisicao == "2") {
 	        	//atualizar tela
 	        	//mandar uma requisicao e depois um arquivo no servidor
-				try {
-					fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        	inputStream = socket.getInputStream();//usado para ler o arquivo via socket
 				
-				try {
-					while ((bytesLidos = inputStream.read(buffer)) != -1) {
-						fileOutputStream.write(buffer, 0, bytesLidos);
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
+
+				while ((bytesLidos = inputStream.read(buffer)) != -1) {
+					fileOutputStream.write(buffer, 0, bytesLidos);
 				}
+
 				FileReader arq = new FileReader("arquivo_recebido.txt");
-				//vai ter os valores que vai ser passado pra funcao
+				// vai ter os valores que vai ser passado pra funcao
 				String[] valores = new String[4];
 				String[] receber = new String[4];
 				BufferedReader ler = new BufferedReader(arq);
-	            //ler o arquivo e colocar dentro de um variaveis o vetor
-				
-	            String linha = ler.readLine();
-	           
-	                
-	            String conteudo[] = linha.split(";");
-	            valores[0] = conteudo[0];
-                valores[1] = conteudo[1];
-                valores[2] = conteudo[2];
-                valores[3] = conteudo[3];
-                valores[4] = conteudo[4];
-                
-                arq.close();
+				// ler o arquivo e colocar dentro de um variaveis o vetor
 
+				String linha = ler.readLine();
+
+				String conteudo[] = linha.split(";");
+				valores[0] = conteudo[0];
+				valores[1] = conteudo[1];
+				valores[2] = conteudo[2];
+				valores[3] = conteudo[3];
+				valores[4] = conteudo[4];
+
+				arq.close();
 	             
 	         
-				try {
-					fileOutputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				fileOutputStream.close();
 	            
 	        }
 			
 	       
 		}
 		}catch(IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			socket.close();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

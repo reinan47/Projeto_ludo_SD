@@ -78,6 +78,7 @@ public class Servidor {
      int valorDoDado;
      while(AcabouOJogo(listJogador) == false) {
     	 RequisicaoAoJogador(jogadorDaVez);
+    	 EnviarParaTodos(listJogador);
     	 
          boolean jogada = true;
          
@@ -123,6 +124,10 @@ public class Servidor {
      }
      
 
+    }
+    //essa funcao vai ler o valor do dado no arquivo
+    public static void LerValorDoDado() {
+    	
     }
     
     public static boolean AcabouOJogo(List<Jogador> listJogador) {
