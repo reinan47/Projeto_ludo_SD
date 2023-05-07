@@ -87,14 +87,14 @@ public class frame extends JFrame {
 		criarPartida.setContentAreaFilled(false);
 		criarPartida.setOpaque(false);
 		criarPartida.setBorder(null);
-		criarPartida.setBounds(120, 550, 250, 50);
+		criarPartida.setBounds(120, 550, 250, 100);
 		principal.add(criarPartida);
 
 		encontrarPartida.setFocusPainted(false);
 		encontrarPartida.setContentAreaFilled(false);
 		encontrarPartida.setOpaque(false);
 		encontrarPartida.setBorder(null);
-		encontrarPartida.setBounds(90, 400, 300, 74);
+		encontrarPartida.setBounds(90, 400, 300, 100);
 		principal.add(encontrarPartida);
 
 		fundo.setBackground(Color.BLACK);
@@ -142,11 +142,6 @@ public class frame extends JFrame {
 
 		EventoEntrarPartida();
 		EventoJogar(principal);
-		
-		JButton button = new JButton("New button");
-		button.setBounds(39, 99, 89, 23);
-		principal.add(button);
-		
 		EventosMouse();
 	}
 
@@ -161,7 +156,6 @@ public class frame extends JFrame {
 				contentPane.revalidate();
 				setContentPane(contentPane);
 				///implementar logica para startar server
-				System.out.printf(ipValue.getText() +"/"+ portValue.getText());
 				try {
 					Socket s = new Socket(ipValue.getText(), Integer.parseInt(portValue.getText()));
 					j = new Jogador(s);
@@ -211,14 +205,14 @@ public class frame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				criarPartida.setBounds(120, 550, 250, 50);
+				criarPartida.setBounds(120, 550, 250, 100);
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				criarPartida.setBounds(120, 545, 250, 50);
+				criarPartida.setBounds(120, 545, 250, 100);
 				somHover();
 
 			}
@@ -246,13 +240,13 @@ public class frame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				encontrarPartida.setBounds(90, 400, 300, 74);
+				encontrarPartida.setBounds(90, 400, 300, 100);
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				encontrarPartida.setBounds(90, 395, 300, 74);
+				encontrarPartida.setBounds(90, 395, 300, 100);
 				somHover();
 			}
 
