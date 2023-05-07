@@ -19,8 +19,11 @@ public class Jogador extends Thread{
 	private int port;
 	private OutputStream outputStream;
 	private InputStream inputStream;
-    private FileInputStream fileInputStream;
-    private FileOutputStream fileOutputStream;
+    //private FileInputStream fileInputStream;
+    //private FileOutputStream fileOutputStream;
+	private BufferedReader inFromUser;
+	private DataOutputStream outToServer;
+	private BufferedReader inFromServer;
 	public Jogador(Socket socket) {
 		//super();
 		this.setSocket(socket);
@@ -37,44 +40,67 @@ public class Jogador extends Thread{
 	
 		String requisicao =" ";
 		try {
+			
 		while(true)
 		{
 		    int bytesLidos = 0;
+		    byte[] buffer = new byte[1024];
+		    inFromUser = new BufferedReader(new InputStreamReader(
+					System.in));
+		    outToServer = new DataOutputStream(
+					socket.getOutputStream());
 			
-			inputStream = socket.getInputStream();
+			inFromServer = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+			requisicao = inFromServer.readLine();
+			//inputStream = socket.getInputStream();
 			
-	        byte[] buffer = new byte[1024];
-			bytesLidos = inputStream.read(buffer);
-			
-	        requisicao = new String(buffer, 0, bytesLidos);
-	        System.out.println("Servidor diz: " +requisicao);
 	        
+			//bytesLidos = inputStream.read(buffer);
+			
+	       // requisicao = new String(buffer, 0, bytesLidos);
+	        System.out.println("Servidor diz: " +requisicao);
+	        buffer = new byte[1024];
 	        if(requisicao == "1") {
 	        	//faz a jogada e escrever em um arquivo
-				// sorteia o dado
-				// chama a funcao jogada
-
-				// enviando o arquivo de jogada para o servidor
-
-				outputStream = socket.getOutputStream();//usado para mandar o arquivo via socket
+				// ATIVAR O BOTAO DE SORTEIO
+				// CHAMA AFUNCAO JOGADA,
+                
+			   
+	        	//A FUNCAO JOGADA RETORNAR UMA STRING
+                String jogadaDoJogador = null;
+				//outputStream = socket.getOutputStream();//usado para mandar o arquivo via socket
+                outToServer.writeBytes(jogadaDoJogador);
 
 				// criando arquivo
 
-				fileInputStream = new FileInputStream("arquivo_cliente_jogada.txt");
+				/*fileInputStream = new FileInputStream("arquivo_cliente_jogada.txt");
 
 				while ((bytesLidos = fileInputStream.read(buffer)) != -1) {
 					outputStream.write(buffer, 0, bytesLidos);
 
-				}
+				}*/
 					
 			
 	        	
 	        }else if(requisicao == "2") {
 	        	//atualizar tela
 	        	//mandar uma requisicao e depois um arquivo no servidor
-	        	inputStream = socket.getInputStream();//usado para ler o arquivo via socket
+	        	//usado para ler o arquivo via socket
+	        	String jogadas = "";
+	        	
+	        	jogadas = inFromServer.readLine();
+	        	//bytesLidos = inputStream.read(buffer);
+	        	//jogadas = new String(buffer, 0, bytesLidos);
+	        		
+	        	System.out.println("jogadas: " + jogadas);
+	            String[] output = jogadas.split(";");//SEPARANDO OS PARAMETROS POR ;
+	            System.out.println(output[0]);
+	            //chamar a funcao para atualizar a tela
+	            
+	        	
 				
-				fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
+				/*fileOutputStream = new FileOutputStream("arquivo_recebido.txt");
 
 				while ((bytesLidos = inputStream.read(buffer)) != -1) {
 					fileOutputStream.write(buffer, 0, bytesLidos);
@@ -100,7 +126,7 @@ public class Jogador extends Thread{
 	             
 	         
 				
-				fileOutputStream.close();
+				fileOutputStream.close();*/
 	            
 	        }
 			

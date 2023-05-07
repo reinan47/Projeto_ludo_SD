@@ -75,12 +75,16 @@ public class Servidor {
     
      i = 0;
      Jogador jogadorDaVez = listJogador.get(0);// variavel para armazena o jogador que vai fazer a jogada no round
-     int valorDoDado;
+     //int valorDoDado;
+     boolean jogada = true;
      while(AcabouOJogo(listJogador) == false) {
-    	 RequisicaoAoJogador(jogadorDaVez);
-    	 EnviarParaTodos(listJogador);
+    	 while(jogada) {
+    	 String jogadaDoJogador = "";
+    	 jogadaDoJogador = RequisicaoAoJogador(jogadorDaVez);
+    	 String valores[]= jogadaDoJogador.split(";");
+    	 EnviarParaTodos(listJogador, jogadaDoJogador);
     	 
-         boolean jogada = true;
+        
          
          /*while(jogada == true) {
         	 int contValorSeis = 0;
@@ -113,22 +117,27 @@ public class Servidor {
                      
              }
          }*/
+    	  if(valores[0] != "6") {//SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE JOGADOR, SE NAO CONTINUA O MESMO JOGADOR
+         	  jogada = false;
+    		  i++;
+         	 
+          }else {
+        	  jogada = true;
+          }
+          // no caso do incremento passar de 4, ja que só possuem 4 jogadores.
+         
+    	 }
          //enivar broadcast com as informacoes de todos o jogadores
-         i++;
-         // no caso do incremento passar de 4, ja que só possuem 4 jogadores.
-         if(i > 4) { 
-        	 i = 0;
-         }
+    	 if(i > 4) { 
+         	 i = 0;
+          }
        //mudar o jogador para jogar naquele round
          jogadorDaVez = listJogador.get(i); 
      }
      
 
     }
-    //essa funcao vai ler o valor do dado no arquivo
-    public static void LerValorDoDado() {
-    	
-    }
+    
     
     public static boolean AcabouOJogo(List<Jogador> listJogador) {
     	 for(Jogador jogador : listJogador) {
@@ -150,20 +159,25 @@ public class Servidor {
 		return false;
     }
     
-    public static void RequisicaoAoJogador(Jogador j) throws IOException {
+    public static String RequisicaoAoJogador(Jogador j) throws IOException {
     	  Socket socket = j.getSocket();
     	  String requisicao = "1";
+    	  String jogada = "";
     	  byte[] cbuffer = new byte[1024];
 		  int bytesRead;
     	  try {
     		//
   			DataOutputStream outToClient = new DataOutputStream(
   					socket.getOutputStream());
+  			BufferedReader inFromClient = new BufferedReader(
+					new InputStreamReader(socket.getInputStream()));
   			//enviando requisicao para cliente
   			outToClient.writeBytes(requisicao);
-  			//recebendo o arquivo do cliente
-  			InputStream inputStream = socket.getInputStream();
-            FileOutputStream fileOutputStream = new FileOutputStream("arquivo_jogada.txt");
+  			//recebendo a jogada do cliente
+  			jogada = inFromClient.readLine();
+  			
+  			
+           /* FileOutputStream fileOutputStream = new FileOutputStream("arquivo_jogada.txt");
             byte[] buffer = new byte[1024];
             int bytesLidos;
             while ((bytesLidos = inputStream.read(buffer)) != -1) {
@@ -173,34 +187,39 @@ public class Servidor {
 
             // Fecha o socket e o servidorSocket
             inputStream.close();
-            outToClient.close();
+            outToClient.close();*/
             socket.close();
           } catch (IOException e) {
               e.printStackTrace();
           }
     	  
-    	  
+    	  return jogada;
     }
     
-    public static void EnviarParaTodos(List<Jogador> listJogador) throws IOException {
+    public static void EnviarParaTodos(List<Jogador> listJogador, String jogada) throws IOException {
     	for(Jogador j : listJogador) {
     		 Socket socket = j.getSocket();
-    		 OutputStream outputStream = socket.getOutputStream();
+    		 //OutputStream outputStream = socket.getOutputStream();
+    		 DataOutputStream outToClient = new DataOutputStream(
+   					socket.getOutputStream());
+   			BufferedReader inFromClient = new BufferedReader(
+ 					new InputStreamReader(socket.getInputStream()));
     		 String requisicao = "2";
     		 //enviando a requisicao
-    		 outputStream.write(requisicao.getBytes());
+    		 outToClient.writeBytes(requisicao);
+    		 //enviando jogada para o cliente
+    		 outToClient.writeBytes(jogada);
     		 
     		 //enviando arquivo
-    		 FileInputStream fileInputStream = new FileInputStream("arquivo_jogada.txt");
+    		 /*FileInputStream fileInputStream = new FileInputStream("arquivo_jogada.txt");
              byte[] buffer = new byte[1024];
              int bytesLidos;
              while ((bytesLidos = fileInputStream.read(buffer)) != -1) {
                  outputStream.write(buffer, 0, bytesLidos);
              }
              fileInputStream.close();
-             outputStream.close();
-             socket.close();
-             socket.close();
+             outputStream.close();*/
+             
     	}
     }
     //ENVIAR INFORMACAOES PARA TODOS OS JOGADORES ATUALIZAREM A TELA
