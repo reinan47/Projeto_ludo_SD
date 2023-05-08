@@ -24,7 +24,7 @@ public class Panel extends JPanel {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	private Jogador jogador = new Jogador(null);
+	pecas p = new pecas();
 
 	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("tabuleiro_jogo.png")));
 
@@ -64,7 +64,7 @@ public class Panel extends JPanel {
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))) };
-
+	private Jogador jogador = new Jogador(kankuro,sasuke,gaara,choji);
 	/**
 	 * Create the panel.
 	 */
@@ -97,6 +97,9 @@ public class Panel extends JPanel {
 				//aki eu passo as referencias dos jogadores e chamo a função de sortear o dado
 				//receber função q recebe o retorno do vaor do dado
 				dado.setIcon(new ImageIcon(getClass().getClassLoader().getResource("dado/dado" + jogador.numAleatorio() + ".png")));
+				//jogador.defineJogador(1);
+				//System.out.println(p.jogadaInfo(5, 1, 0, 10, 20, kankuro[3], "kankuro"));
+				
 			}
 		});
 		setLocale(null);
@@ -176,10 +179,9 @@ public class Panel extends JPanel {
 
 		//new pecas(sasuke, 0, 2, "sasuke").start();
 
-		new pecas(gaara, 0, 3, "gaara").start();
+		//new pecas(gaara, 0, 3, "gaara").start();
 
-
-		//new pecas(choji, 0, 4, "choji").start();
+		
 		
 		
 		//envia depois de mexido

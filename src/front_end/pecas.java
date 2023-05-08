@@ -16,6 +16,14 @@ public class pecas extends Thread {
 	private ImageIcon img;
 	private int posX;
 	private int posY;
+	
+	
+	private String informacoesParaCliente = null; 
+	private int indexPeca;
+	private int percurso;
+	private int getX;
+	private int getY;
+	
 
 	// posições iniciais de origens das peças
 	private int[] initialKankuroX = { 568, 622, 568, 622 };
@@ -29,8 +37,6 @@ public class pecas extends Thread {
 
 	private int[] initialChojiX = { 272, 327, 272, 327 };
 	private int[] initialChojiY = { 132, 132, 187, 187 };
-	private int percurso = 0;
-	private int[] percursoPecas = { 0, 0, 0, 0 };
 
 	// posições das casas iniciais quando tirar um 6 no sorteio
 	private int saidaKankuroX = 480;
@@ -57,34 +63,23 @@ public class pecas extends Thread {
 	private int posChojiX;
 	private int posChojiY;
 
-	public pecas(JLabel peca[], int numDado, int numPlay, String personagem) {
+	public pecas(int numDado, int numPlay, int percurso, int getX, int getY, int indexPeca, String personagem) {
 		super();
-		this.peca = peca;
 		this.numDado = numDado;
 		this.numPlay = numPlay;
+		this.percurso = percurso;
+		this.getX = getX;
+		this.getY = getY;
+		this.indexPeca = indexPeca;
 		this.personagem = personagem;
 	}
-
-	public pecas(String personagem, int posX, int posY) {
-		this.personagem = personagem;
-		this.setPosX(posX);
-		this.setPosY(posY);
-	}
+	public pecas() {}
 
 	public void run() {
-		// while(true) {
-		// as thread ficam escultando e recebendo os valores do server aqui
-		// jogada(0, peca[0], numPlay, personagem);
-		// jogada(3, numPlay, 0, saidaKankuroX, saidaKankuroY, peca[0], personagem);
-		jogada(57, numPlay, 0, saidaGaaraX, saidaGaaraY, peca[3], personagem);
-		// jogada(6, peca[0], numPlay, personagem);
-		// jogada(6, peca[0], numPlay, personagem);
-		// jogada(6, peca[0], numPlay, personagem);
-		// jogada(6, peca[0], numPlay, personagem);
-		// }
+		jogada(numDado, numPlay, percurso, getX, getY, peca[indexPeca], personagem);
 	}
 
-	public void jogada(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
+	public String jogada(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
 		if (numPlay == 1) {
 			posKankuroX = getX;
 			posKankuroY = getY;
@@ -423,6 +418,263 @@ public class pecas extends Thread {
 				}
 			}
 		}
+		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
+		return informacoesParaCliente;
+	}
+	public String jogadaInfo(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
+		if (numPlay == 1) {
+			posKankuroX = getX;
+			posKankuroY = getY;
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					posKankuroY += 33;
+					if (percurso == 5) {
+						posKankuroX = 513;
+						posKankuroY = 280;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					posKankuroX += 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					posKankuroY += 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					posKankuroX -= 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posKankuroX = 480;
+						posKankuroY = 346;
+					}
+					percurso++;
+					posKankuroY += 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					posKankuroX -= 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					posKankuroY -= 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posKankuroX = 414;
+						posKankuroY = 346;
+					}
+					posKankuroX -= 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					posKankuroY -= 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					posKankuroX += 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posKankuroX = 414;
+						posKankuroY = 280;
+					}
+					posKankuroY -= 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					posKankuroX += 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					posKankuroY += 33;
+					percurso++;
+				}
+				sleep();
+
+
+			}
+		} else if (numPlay == 2) {
+			posSasukeX = getX;
+			posSasukeY = getY;
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					posSasukeX -= 33;
+					if (percurso == 5) {
+						posSasukeX = 480;
+						posSasukeY = 379;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					posSasukeY += 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					posSasukeX -= 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					posSasukeY -= 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posSasukeX = 414;
+						posSasukeY = 346;
+					}
+					percurso++;
+					posSasukeX -= 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					posSasukeY -= 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					posSasukeX += 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posSasukeX = 414;
+						posSasukeY = 280;
+					}
+					posSasukeY -= 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					posSasukeX += 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					posSasukeY += 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posSasukeX = 480;
+						posSasukeY = 280;
+					}
+					posSasukeX += 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					posSasukeY += 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					posSasukeX -= 33;
+					percurso++;
+				}
+			}
+		} else if (numPlay == 3) {
+			posGaaraX = getX;
+			posGaaraY = getY;
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					posGaaraY -= 33;
+					if (percurso == 5) {
+						posGaaraX = 381;
+						posGaaraY = 346;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					posGaaraX -= 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					posGaaraY -= 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					posGaaraX += 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posGaaraX = 414;
+						posGaaraY = 280;
+					}
+					percurso++;
+					posGaaraY -= 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					posGaaraX += 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					posGaaraY += 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posGaaraX = 480;
+						posGaaraY = 280;
+					}
+					posGaaraX += 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					posGaaraY += 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					posGaaraX -= 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posGaaraX = 480;
+						posGaaraY = 346;
+					}
+					posGaaraY += 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					posGaaraX -= 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					posGaaraY -= 33;
+					percurso++;
+				}
+			}
+		} else if (numPlay == 4) {
+			posChojiX = getX;
+			posChojiY = getY;
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					posChojiX += 33;
+					if (percurso == 5) {
+						posChojiX = 414;
+						posChojiY = 247;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					posChojiY -= 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					posChojiX += 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					posChojiY += 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posChojiX = 480;
+						posChojiY = 280;
+					}
+					percurso++;
+					posChojiX += 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					posChojiY += 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					posChojiX -= 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posChojiX = 480;
+						posChojiY = 346;
+					}
+					posChojiY += 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					posChojiX -= 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					posChojiY -= 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posChojiX = 414;
+						posChojiY = 346;
+					}
+					posChojiX -= 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					posChojiY -= 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					posChojiX += 33;
+					percurso++;
+				}
+				if (percurso == 57) {
+					// bota logica pra remover a peça
+				}
+			}
+		}
+		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
+		return informacoesParaCliente;
 	}
 
 	private void Ataque(JLabel peca, String personagem) {

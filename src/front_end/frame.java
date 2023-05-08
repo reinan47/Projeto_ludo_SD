@@ -54,7 +54,7 @@ public class frame extends JFrame {
 	private JButton encontrarPartida = new JButton(
 			new ImageIcon(frame.class.getClassLoader().getResource("entrar_partida.png")));
 
-	Jogador j;
+	public static Jogador j;
 
 	
 	/**
@@ -158,13 +158,14 @@ public class frame extends JFrame {
 				///implementar logica para startar server
 				try {
 					Socket s = new Socket(ipValue.getText(), Integer.parseInt(portValue.getText()));
-					j = new Jogador(s);
+					//j = new Jogador(s);
+					
 				} catch (NumberFormatException | IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
 					//System.exit(0);
 				}
-
+				
 
 			}
 		});
