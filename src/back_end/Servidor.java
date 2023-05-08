@@ -88,7 +88,10 @@ public class Servidor extends Thread {
 		jogadaDoJogador = RequisicaoAoJogador(j, listJogador.get(1));
 		String valores[] = jogadaDoJogador.split(";");
 		System.out.println("==== Enviar para todos ====");
-		EnviarParaTodos(listJogador.get(1), jogadaDoJogador);
+		EnviarParaTodos(listJogador, jogadaDoJogador);
+		
+		System.out.println("Valores passado no X do jogador 1: " + j.getX());
+		System.out.println("Valores passado no X do jogador 2: " + j2.getX());
 
 		if (valores[0] != "6") {// SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE JOGADOR, SE NAO CONTINUA O
 								// MESMO JOGADOR
@@ -146,29 +149,33 @@ public class Servidor extends Thread {
 			
 			
 			// recebendo a jogada do cliente
-			System.out.println("from jogador: " + inFromClient.readLine());
-
-	
+			//System.out.println("from jogador: " + inFromClient.readLine());
+            jogada = inFromClient.readLine();
+          
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return jogada;
+
+		
 	}
     //ENVIAR JOGADA PARA TODOS
-	public static void EnviarParaTodos(Socket l, String jogada) throws IOException {
-	//for (Socket j : listJogador) {
-		OutputStream out = l.getOutputStream();
+	public static void EnviarParaTodos(List<Socket> listJogador, String jogada) throws IOException {
+		int i = 0;
+		for (Socket j : listJogador) {
+			OutputStream out = j.getOutputStream();
 
-		// enviando requisicao para cliente
-		PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
-		jogada = "123;333";
-		String requisicao = "2";
-		// enviando a requisicao
-		pw.println(requisicao);
-		// enviando jogada para o cliente
-		pw.println(jogada);
-
+			// enviando requisicao para cliente
+			PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do
+															// buffer
+			
+			String requisicao = "2";
+			// enviando a requisicao
+			pw.println(requisicao);
+			// enviando jogada para o cliente
+			pw.println(jogada);
+			i++;
+		}
 		
 	}
 	

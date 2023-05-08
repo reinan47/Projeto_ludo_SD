@@ -29,16 +29,16 @@ public class Jogador extends Thread{
 	private JLabel[] gaara;
 	private JLabel[] choji;
 	
-	private int getx;
-	private int gety;
+	private int x;
+	private int y;
 	
 	private int portTeste;
 	private String ip;
-	
+	/*
 	public Jogador(int getx, int gety) {
-		this.getx = getx;
+		this.setGetx(getx);
 		this.gety = gety;
-	}
+	}*/
 	
 	private pecas p = new pecas();
 	
@@ -90,10 +90,10 @@ public class Jogador extends Thread{
 				// ATIVAR O BOTAO DE SORTEIO
                 System.out.println("aki");
              // CHAMA AFUNCAO JOGADA,
-	        	String jogadaDoJogador;
+	        	String jogadaDoJogador = "123;333";
 	        	
 	        	PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
-				pw.println("From Jogador: ola, servidor");
+				pw.println(jogadaDoJogador);
 			
 					
 			
@@ -104,11 +104,12 @@ public class Jogador extends Thread{
 	            //JOGADOR RECEBE JOGADA DO SERVIDOR
 	        	String jogadas = "";
 	        	
-	        	jogadas = inB.readLine();;
+	        	jogadas = inB.readLine();
 	        	
 	        	System.out.println("jogadas: " + jogadas);
 	            String[] output = jogadas.split(";");//SEPARANDO OS PARAMETROS POR ;
 	            System.out.println(output[0]);
+	            this.setX(Integer.parseInt(output[0]));
 	            //chamar a funcao para atualizar a tela
 	            
 	    
@@ -131,6 +132,9 @@ public class Jogador extends Thread{
 		
 		
 	}
+	
+
+
 	public void defineJogador(int numPlay) {
 		/*if(numPlay == 1) {
 			new pecas(kankuro, 5, numPlay, "kankuro").start();
@@ -217,4 +221,26 @@ public class Jogador extends Thread{
 		this.inputStream = inputStream;
 	}
 
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	
 }
