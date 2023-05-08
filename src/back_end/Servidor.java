@@ -6,10 +6,11 @@ import java.util.*;
 
 public class Servidor extends Thread {
 	static ServerSocket serverSocket = null;
-	private static List<Jogador> listJogador = new ArrayList<>();
+	private static List<Socket> listJogador = new ArrayList<>();
 	private static int port = 8000;
 	public static Socket s;
 	public static Jogador j;
+	public static Jogador j2;
 
 	public static void main(String[] args) {
 		try {
@@ -41,6 +42,13 @@ public class Servidor extends Thread {
 			j = new Jogador(sj);
 			j.start();
 			s = serverSocket.accept();
+			listJogador.add(s);
+			Socket sj2 = new Socket("127.0.0.1", 8000);
+			j2 = new Jogador(sj2);
+			j2.start();
+			s = serverSocket.accept();
+			listJogador.add(s);
+			
 
 			System.out.println("Entrou");
 //			listJogador.add(j);
@@ -64,6 +72,10 @@ public class Servidor extends Thread {
 //			// jogador.setPeca(armazena[i]);
 //			i++;
 //		}
+		
+		if(!listJogador.get(0).equals(listJogador.get(1))) {
+			System.out.println("Sao iguais");
+		}
 
 		i = 0;
 //		Jogador jogadorDaVez = listJogador.get(0);// variavel para armazena o jogador que vai fazer a jogada no round
@@ -72,31 +84,12 @@ public class Servidor extends Thread {
 		// while (AcabouOJogo(listJogador) == false) {
 		// while (jogada) {
 		String jogadaDoJogador = "";
-
-		jogadaDoJogador = RequisicaoAoJogador(j, s);
+        System.out.println("==== funcao vez do jogador ====");
+		jogadaDoJogador = RequisicaoAoJogador(j, listJogador.get(1));
 		String valores[] = jogadaDoJogador.split(";");
-		EnviarParaTodos(listJogador, jogadaDoJogador);
+		System.out.println("==== Enviar para todos ====");
+		EnviarParaTodos(listJogador.get(1), jogadaDoJogador);
 
-		/*
-		 * while(jogada == true) { int contValorSeis = 0; // o servidor uma requisicao
-		 * pedindo a jogada do jogadorDaVez //o servidor recebe a jogada if(valorDoDado
-		 * == 6) { contValorSeis++; //se a jogada tiver valida, //vai mandar um
-		 * broadcast com a posicao de todas as pecas if(contValorSeis == 3) { jogada =
-		 * false; }else { jogadorDaVez.setQtdPercurso(valorDoDado);
-		 * if(jogadorDaVez.getQtdPercurso() == 57 && jogadorDaVez.getQtdPeca() > 0)
-		 * {//QUANDO UMA PECA CHEGAR AO PERCURSO MAXIMO QUE E 57
-		 * jogadorDaVez.setQtdPeca(); } //verificarAtaque
-		 * 
-		 * jogada = true; }
-		 * 
-		 * 
-		 * }else if(valorDoDado != 6){ jogadorDaVez.setQtdPercurso(valorDoDado);
-		 * if(jogadorDaVez.getQtdPercurso() == 57 && jogadorDaVez.getQtdPeca() > 0)
-		 * {//QUANDO UMA PECA CHEGAR AO PERCURSO MAXIMO QUE E 57
-		 * jogadorDaVez.setQtdPeca(); } //verificarAtaque jogada = false;
-		 * 
-		 * } }
-		 */
 		if (valores[0] != "6") {// SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE JOGADOR, SE NAO CONTINUA O
 								// MESMO JOGADOR
 			jogada = false;
@@ -137,85 +130,46 @@ public class Servidor extends Thread {
 		}
 		return false;
 	}
-
+    //AVISANDO AO JOGADOR QUE E A VEZ DELE
 	public static String RequisicaoAoJogador(Jogador j, Socket s) throws IOException {
-		Socket socket = j.getSocket();
 		String requisicao = "1";
 		String jogada = "";
-		byte[] cbuffer = new byte[1024];
-		int bytesRead;
+	
 		try {
 			//
-			DataOutputStream outToClient = new DataOutputStream(s.getOutputStream());
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//			System.out.println(s.getLocalPort());
+			OutputStream out = s.getOutputStream();
+
 			// enviando requisicao para cliente
-			outToClient.writeInt(1);
+			PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
+			pw.println(requisicao);
+			
 			
 			// recebendo a jogada do cliente
 			System.out.println("from jogador: " + inFromClient.readLine());
 
-			/*
-			 * FileOutputStream fileOutputStream = new
-			 * FileOutputStream("arquivo_jogada.txt"); byte[] buffer = new byte[1024]; int
-			 * bytesLidos; while ((bytesLidos = inputStream.read(buffer)) != -1) {
-			 * fileOutputStream.write(buffer, 0, bytesLidos); } fileOutputStream.close();
-			 * 
-			 * // Fecha o socket e o servidorSocket inputStream.close();
-			 * outToClient.close();
-			 */
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return jogada;
 	}
+    //ENVIAR JOGADA PARA TODOS
+	public static void EnviarParaTodos(Socket l, String jogada) throws IOException {
+	//for (Socket j : listJogador) {
+		OutputStream out = l.getOutputStream();
 
-	public static void EnviarParaTodos(List<Jogador> listJogador, String jogada) throws IOException {
-//		for (Jogador j : listJogador) {
-		System.out.println("daniel ~e gpstossssssssssssssssssssssssso");
-		Socket socket = j.getSocket();
-		// OutputStream outputStream = socket.getOutputStream();
-		System.out.println("daniel ~e gpstossssssssssssssssssssssssso");
-		DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		// enviando requisicao para cliente
+		PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
+		jogada = "123;333";
 		String requisicao = "2";
 		// enviando a requisicao
-		outToClient.writeBytes(requisicao);
+		pw.println(requisicao);
 		// enviando jogada para o cliente
-		outToClient.writeBytes(jogada);
+		pw.println(jogada);
 
-		// enviando arquivo
-		/*
-		 * FileInputStream fileInputStream = new FileInputStream("arquivo_jogada.txt");
-		 * byte[] buffer = new byte[1024]; int bytesLidos; while ((bytesLidos =
-		 * fileInputStream.read(buffer)) != -1) { outputStream.write(buffer, 0,
-		 * bytesLidos); } fileInputStream.close(); outputStream.close();
-		 */
-
-//		}
+		
 	}
-	// ENVIAR INFORMACAOES PARA TODOS OS JOGADORES ATUALIZAREM A TELA
-	/*
-	 * public static void EnviarBroadCast(List<Jogador> listJogador) {
-	 * DatagramSocket servidor = new DatagramSocket(5000);
-	 * 
-	 * 
-	 * int numBytesLidos; int contJogador = 0; //escrevendo no arquivo String valor
-	 * = "1"; File file = new File("arquivo_enviado_cliente.txt");
-	 * file.createNewFile(); FileWriter fileWriter = new FileWriter(file);
-	 * BufferedWriter escrever = new BufferedWriter(fileWriter);
-	 * escrever.write(valor);
-	 * 
-	 * escrever.close(); fileWriter.close(); byte[] bufferArquivo = new byte[1024];
-	 * 
-	 * while ((numBytesLidos = file.read(bufferArquivo)) > 0) { // Cria um pacote
-	 * para enviar os dados do arquivo DatagramPacket pacoteArquivo = new
-	 * DatagramPacket(bufferArquivo, numBytesLidos); OutputStream saida =
-	 * listJogador.get(contJogador).getOutputStream(); // Envia o pacote para todos
-	 * os clientes conectados for (InetSocketAddress Jogador : ) {
-	 * pacoteArquivo.setSocketAddress(cliente); servidor.send(pacoteArquivo); }
-	 * contJogador++; } }
-	 */
-
+	
 }
