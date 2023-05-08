@@ -71,20 +71,29 @@ public class Jogador extends Thread{
 		    byte[] buffer = new byte[1024];
 		    inFromUser = new BufferedReader(new InputStreamReader(
 					System.in));
+		    
 		    outToServer = new DataOutputStream(
 					socket.getOutputStream());
 			
 		    InputStream inputStream = socket.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+            DataInputStream in = new DataInputStream(inputStream);
+            BufferedReader inB = new BufferedReader(new InputStreamReader(inputStream)); 
+//            if(socket.isConnected()) {
+//            	System.out.println("ta conectado");
+//            	System.out.println(socket.getInetAddress());
+//            	System.out.println(socket.getPort());
+//            }
             
-            if(socket.isConnected()) {
-            	System.out.println("ta conectado");
-            	System.out.println(socket.getInetAddress());
-            	System.out.println(socket.getPort());
-            }System.out.println("antes de ler do servidor");
+            System.out.println("antes de ler do servidor");
             
-			requisicao = in.readLine();
+            String le;
+//            while((le = inB.read()) != null)
+//            	System.out.println("From server: " + le);
+            
+			System.out.println("from server: " + inB.read());
+			
+			
 			System.out.println("enviou");
 			//inputStream = socket.getInputStream();
 			
