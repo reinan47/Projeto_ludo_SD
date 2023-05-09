@@ -86,18 +86,14 @@ public class Jogador extends Thread{
 	       
 	        
 	        if(requisicao.equals("1")) {
-	        	//faz a jogada e escrever em um arquivo
 				// ATIVAR O BOTAO DE SORTEIO
                 System.out.println("aki");
-             // CHAMA AFUNCAO JOGADA,
-	        	String jogadaDoJogador = "123;333";
+             // CHAMA A FUNCAO JOGADA, 
+	        	String jogadaDoJogador = "123;333";//CHAMA A FUNCAO DE JOGADA PARA RETORNAR A JOGADA
 	        	
 	        	PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
 				pw.println(jogadaDoJogador);
-			
-					
-			
-	        	
+
 	        }else if(requisicao.equals("2")) {
 	        	//atualizar tela
 	        	//mandar uma requisicao e depois um arquivo no servidor
@@ -105,14 +101,19 @@ public class Jogador extends Thread{
 	        	String jogadas = "";
 	        	
 	        	jogadas = inB.readLine();
+	        	//
 	        	
 	        	System.out.println("jogadas: " + jogadas);
 	            String[] output = jogadas.split(";");//SEPARANDO OS PARAMETROS POR ;
+	            //A FUNCAO DE CHAMADA PARA ATUALIZAR A TELA DO JOGADOR
 	            System.out.println(output[0]);
 	            this.setX(Integer.parseInt(output[0]));
 	            //chamar a funcao para atualizar a tela
 	            
-	    
+	        //jogador enviar quantas pecas tem
+	        }else if(requisicao.equals("3")) {
+	        	PrintWriter pw = new PrintWriter(out, true); 
+				pw.println(this.qtdPeca);
 	        }
 			
 	       
