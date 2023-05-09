@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -145,18 +146,12 @@ public class frame extends JFrame {
 		criarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/// implementar logica para startar server
 				try {
 					Servidor server = new Servidor(Integer.parseInt(portValue.getText()));
 					server.start();
-					// Socket s = new Socket(ipValue.getText(),
-					// Integer.parseInt(portValue.getText()));
-					// j = new Jogador(s);
-
+					JOptionPane.showMessageDialog(null, "Escutando na porta : " + portValue.getText() + "\n 1 - colocar IP e PORTA \n2 - Clique em encontrar partida");
 				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					// e1.printStackTrace();
-					// System.exit(0);
+
 				}
 
 			}

@@ -33,7 +33,6 @@ public class Servidor extends Thread {
 			e.printStackTrace();
 		}
 	}
-
 	// vai receber parametros o ip e a pors
 	public static void ServidorJogada(int port) throws IOException {
 		try {
