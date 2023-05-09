@@ -63,7 +63,7 @@ public class pecas extends Thread {
 	private int posChojiX;
 	private int posChojiY;
 
-	public pecas(int numDado, int numPlay, int percurso, int getX, int getY, int indexPeca, String personagem) {
+	public pecas(int numDado, int numPlay, int percurso, int getX, int getY, int indexPeca, String personagem, JLabel[] peca) {
 		super();
 		this.numDado = numDado;
 		this.numPlay = numPlay;
@@ -72,6 +72,7 @@ public class pecas extends Thread {
 		this.getY = getY;
 		this.indexPeca = indexPeca;
 		this.personagem = personagem;
+		this.peca = peca;
 	}
 	public pecas() {}
 
@@ -79,7 +80,7 @@ public class pecas extends Thread {
 		jogada(numDado, numPlay, percurso, getX, getY, peca[indexPeca], personagem);
 	}
 
-	public String jogada(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
+	public void jogada(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
 		if (numPlay == 1) {
 			posKankuroX = getX;
 			posKankuroY = getY;
@@ -130,15 +131,15 @@ public class pecas extends Thread {
 					}
 					posKankuroX -= 33;
 					percurso++;
-					Alternar(i, personagem, "esquerda", posKankuroX, posKankuroY, peca);
+					Alternar(percurso, personagem, "esquerda", posKankuroX, posKankuroY, peca);
 				} else if (percurso >= 37 && percurso < 39) {
 					posKankuroY -= 33;
 					percurso++;
-					Alternar(i, personagem, "costa", posKankuroX, posKankuroY, peca);
+					Alternar(percurso, personagem, "costa", posKankuroX, posKankuroY, peca);
 				} else if (percurso >= 39 && percurso < 44) {
 					posKankuroX += 33;
 					percurso++;
-					Alternar(i, personagem, "direita", posKankuroX, posKankuroY, peca);
+					Alternar(percurso, personagem, "direita", posKankuroX, posKankuroY, peca);
 				} else if (percurso >= 44 && percurso < 50) {
 					if (percurso == 44) {
 						posKankuroX = 414;
@@ -202,11 +203,11 @@ public class pecas extends Thread {
 				} else if (percurso >= 24 && percurso < 26) {
 					percurso++;
 					posSasukeY -= 33;
-					Alternar(i, personagem, "costa", posSasukeX, posSasukeY, peca);
+					Alternar(percurso, personagem, "costa", posSasukeX, posSasukeY, peca);
 				} else if (percurso >= 26 && percurso < 31) {
 					posSasukeX += 33;
 					percurso++;
-					Alternar(i, personagem, "direita", posSasukeX, posSasukeY, peca);
+					Alternar(percurso, personagem, "direita", posSasukeX, posSasukeY, peca);
 				} else if (percurso >= 31 && percurso < 37) {
 					if (percurso == 31) {
 						posSasukeX = 414;
@@ -286,11 +287,11 @@ public class pecas extends Thread {
 				} else if (percurso >= 24 && percurso < 26) {
 					percurso++;
 					posGaaraX += 33;
-					Alternar(i, personagem, "direita", posGaaraX, posGaaraY, peca);
+					Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
 				} else if (percurso >= 26 && percurso < 31) {
 					posGaaraY += 33;
 					percurso++;
-					Alternar(i, personagem, "frente", posGaaraX, posGaaraY, peca);
+					Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
 				} else if (percurso >= 31 && percurso < 37) {
 					if (percurso == 31) {
 						posGaaraX = 480;
@@ -299,15 +300,15 @@ public class pecas extends Thread {
 					}
 					posGaaraX += 33;
 					percurso++;
-					Alternar(i, personagem, "direita", posGaaraX, posGaaraY, peca);
+					Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
 				} else if (percurso >= 37 && percurso < 39) {
 					posGaaraY += 33;
 					percurso++;
-					Alternar(i, personagem, "frente", posGaaraX, posGaaraY, peca);
+					Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
 				} else if (percurso >= 39 && percurso < 44) {
 					posGaaraX -= 33;
 					percurso++;
-					Alternar(i, personagem, "esquerda", posGaaraX, posGaaraY, peca);
+					Alternar(percurso, personagem, "esquerda", posGaaraX, posGaaraY, peca);
 				} else if (percurso >= 44 && percurso < 50) {
 					if (percurso == 44) {
 						posGaaraX = 480;
@@ -383,15 +384,15 @@ public class pecas extends Thread {
 					}
 					posChojiY += 33;
 					percurso++;
-					Alternar(i, personagem, "frente", posChojiX, posChojiY, peca);
+					Alternar(percurso, personagem, "frente", posChojiX, posChojiY, peca);
 				} else if (percurso >= 37 && percurso < 39) {
 					posChojiX -= 33;
 					percurso++;
-					Alternar(i, personagem, "esquerda", posChojiX, posChojiY, peca);
+					Alternar(percurso, personagem, "esquerda", posChojiX, posChojiY, peca);
 				} else if (percurso >= 39 && percurso < 44) {
 					posChojiY -= 33;
 					percurso++;
-					Alternar(i, personagem, "costa", posChojiX, posChojiY, peca);
+					Alternar(percurso, personagem, "costa", posChojiX, posChojiY, peca);
 				} else if (percurso >= 44 && percurso < 50) {
 					if (percurso == 44) {
 						posChojiX = 414;
@@ -419,7 +420,6 @@ public class pecas extends Thread {
 			}
 		}
 		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
-		return informacoesParaCliente;
 	}
 	public String jogadaInfo(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
 		if (numPlay == 1) {

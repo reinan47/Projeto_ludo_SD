@@ -41,8 +41,6 @@ public class frame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Principal principal = new Principal();
-	private Servidor server = new Servidor();
-
 	private JLabel ip = new JLabel("IP");
 	private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
 	private JLabel port = new JLabel("Porta");
@@ -56,7 +54,6 @@ public class frame extends JFrame {
 
 	public static Jogador j;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -133,7 +130,6 @@ public class frame extends JFrame {
 		ip.setBounds(240, 167, 20, 20);
 		port.setBounds(222, 265, 50, 20);
 
-
 		getContentPane().add(ip);
 		getContentPane().add(port);
 		getContentPane().add(ipValue);
@@ -149,34 +145,50 @@ public class frame extends JFrame {
 		criarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Panel contentPane = new Panel();
-				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-				setBounds(150, 10, 1000, 700);
-				contentPane.repaint();
-				contentPane.revalidate();
-				setContentPane(contentPane);
-				///implementar logica para startar server
+				/// implementar logica para startar server
 				try {
-					Socket s = new Socket(ipValue.getText(), Integer.parseInt(portValue.getText()));
-					//j = new Jogador(s);
-					
-				} catch (NumberFormatException | IOException e1) {
+					Servidor server = new Servidor(Integer.parseInt(portValue.getText()));
+					server.start();
+					// Socket s = new Socket(ipValue.getText(),
+					// Integer.parseInt(portValue.getText()));
+					// j = new Jogador(s);
+
+				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-					//System.exit(0);
+					// e1.printStackTrace();
+					// System.exit(0);
 				}
-				
 
 			}
 		});
-		
+
 	}
 
 	public void EventoEntrarPartida() {
 		encontrarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				boolean aux = false;
+				try {
+					try {
+						Servidor s = new Servidor();
+						aux = s.CriarJogador(ipValue.getText(), Integer.parseInt(portValue.getText()));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (aux == true) {
+						Panel contentPane = new Panel();
+						contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+						setBounds(150, 10, 1000, 700);
+						contentPane.repaint();
+						contentPane.revalidate();
+						setContentPane(contentPane);
+					}
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
