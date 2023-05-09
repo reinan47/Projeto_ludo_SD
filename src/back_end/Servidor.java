@@ -33,6 +33,7 @@ public class Servidor extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 	// vai receber parametros o ip e a pors
 	public static void ServidorJogada(int port) throws IOException {
 		try {
@@ -42,18 +43,20 @@ public class Servidor extends Thread {
 			System.exit(-1);
 		}
 		// pode modificar esse parametro para receber novas conexoes
-		while (listJogador.size() < 4) {
+		while (listJogador.size() < 1) {
 			if (listJogador.size() == 1) {
-				serverSocket.setSoTimeout(1000);
+				serverSocket.setSoTimeout(30000);
 			}
 			try {
 				s = serverSocket.accept();
-				//System.out.println("conectou jogador" + s.getInetAddress());
+				listJogador.add(s);
+				System.out.println("conectou jogador" + s.getInetAddress());
 			} catch (SocketTimeoutException e) {
 				JOptionPane.showMessageDialog(null, "Servidor fechado por inatividade");
 				serverSocket.close();
 			}
-
+			
+			IniciaJogo();
 			// criando as pecas
 			// criando variavel para armazena no vetor e atribuir os jogadores
 		}
@@ -74,85 +77,93 @@ public class Servidor extends Thread {
 			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Essas endereços não correspondem a uma partida válida");
 		}
-		if (soketJogador != null) {
+		/* if (soketJogador != null) { */
 			j = new Jogador(soketJogador);
 			j.start();
-			listJogador.add(s);
 			return true;
-		}else {
-			return false;
-		}
+			/*
+			 * } else { return false; }
+			 */
+	}
 
-		/*
-		 * Socket sj2 = new Socket("127.0.0.1", 8000); j2 = new Jogador(sj2);
-		 * j2.start(); s = serverSocket.accept(); listJogador.add(s);
-		 */
+	/*
+	 * Socket sj2 = new Socket("127.0.0.1", 8000); j2 = new Jogador(sj2);
+	 * j2.start(); s = serverSocket.accept(); listJogador.add(s);
+	 */
 
-		// System.out.println("Entrou");
+	// System.out.println("Entrou");
 //			listJogador.add(j);
 //			System.out.println(listJogador.get(0).getSocket().getPort());
-		// criar metodo ao inves de thread
-		// j.start();
+	// criar metodo ao inves de thread
+	// j.start();
 
-		// logica do jogo
+	// logica do jogo
 
-		// mudar daqui pois os valores não estão preparado ai fica com exceçãp
-		/*
-		 * int i = 0;
-		 *  // dedicando as pecas ao jogadores 
-		 *  // for (Jogador jogador : listJogador) { 
-		 *  // jogador.setPeca(armazena[i]); // i++; 
-		 *  // }
-		 * 
-		 * i = 0; 
-		 * // Jogador jogadorDaVez = listJogador.get(0);
-		 * // variavel para armazena
-		 * o jogador que vai fazer a jogada no round 
-		 * // int valorDoDado; boolean jogada = true; 
-		 * String[] qtdPecas = EnviarPecas(listJogador); 
-		 * while(AcabouOJogo(qtdPecas) == false) { 
-		 * while (jogada) { 
-		 * String jogadaDoJogador =""; 
-		 * System.out.println("==== funcao vez do jogador ====");
-		 * jogadaDoJogador =
-		 * RequisicaoAoJogador(j, listJogador.get(0));
-		 * String valores[] = jogadaDoJogador.split(";");
-		 * System.out.println("==== Enviar para todos ====");
-		 * EnviarParaTodos(listJogador, jogadaDoJogador); 
-		 * // qtdPecas =
-		 * EnviarPecas(listJogador);
-		 * 
-		 * System.out.println("Valores passado no X do jogador 1: " + j.getX());
-		 * System.out.println("Valores passado no X do jogador 2: " + j2.getX());
-		 * 
-		 * if (valores[0] != "6") {// SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE
-		 * JOGADOR, SE NAO CONTINUA O // MESMO JOGADOR jogada = false; i++;
-		 * 
-		 * } else { jogada = true; } // no caso do incremento passar de 4, ja que só
-		 * possuem 4 jogadores.
-		 * 
-		 * // } 
-		 * // enivar broadcast com as informacoes de todos o jogadores if (i > 4) {
-		 * i = 0;
-		 * } 
-		 * }
-		 * } // mudar o jogador para jogar naquele round 
-		 * // jogadorDaVez = listJogador.get(i);
-		 */
-	}
+	// mudar daqui pois os valores não estão preparado ai fica com exceçãp
+	public static void IniciaJogo() {
+		int i = 0;
+		// dedicando as pecas ao jogadores
+		i = 0;
+		Socket jogadorDaVez = listJogador.get(i);
+		// variavel para armazena
+		// o jogador que vai fazer a jogada no round
+		int valorDoDado;
+		boolean jogada = true;
+		//String[] qtdPecas = EnviarPecas(listJogador);
+		try {
+			while (true) {
+				while (jogada) {
+					String jogadaDoJogador = "";
+					System.out.println("==== funcao vez do jogador ====");
+
+					jogadaDoJogador = RequisicaoAoJogador(jogadorDaVez, i);
+					String valores[] = jogadaDoJogador.split(";");
+					System.out.println("==== Enviar para todos ====");
+					EnviarParaTodos(listJogador, jogadaDoJogador);
+
+					// qtdPecas =
+					EnviarPecas(listJogador);
+
+					if (valores[0] != "6") {// SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE
+						// JOGADOR, SE NAO CONTINUA O // MESMO JOGADOR jogada = false; i++;
+						jogada = false;
+						i++;
+						
+					} else {
+						jogada = true;
+					} // no caso do incremento passar de 4, ja que só
+						// possuem 4 jogadores.
+
+					if (i > 4) {
+						i = 0;
+					}
+				}
+				//mudar isso
+				jogadorDaVez = listJogador.get(0);
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	} // mudar o jogador para jogar naquele round
+		// jogadorDaVez = listJogador.get(i);
 
 	// }
 
 	public static boolean AcabouOJogo(String[] pecas) {
-		/*
-		 * for (String s : pecas) { if (Integer.parseInt(s) == 0) { return true; } }
-		 */
+
+		for (String s : pecas) {
+			if (Integer.parseInt(s) == 0) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	// AVISANDO AO JOGADOR QUE E A VEZ DELE
-	public static String RequisicaoAoJogador(Jogador j, Socket s) throws IOException {
-		String requisicao = "1";
+	public static String RequisicaoAoJogador(Socket s, int i) throws IOException {
+		String requisicao = "1"+ ";" + i;
 		String jogada = "";
 
 		try {

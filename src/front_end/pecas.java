@@ -77,6 +77,7 @@ public class pecas extends Thread {
 	public pecas() {}
 
 	public void run() {
+		//criar vetor de percurso
 		jogada(numDado, numPlay, percurso, getX, getY, peca[indexPeca], personagem);
 	}
 
@@ -421,7 +422,7 @@ public class pecas extends Thread {
 		}
 		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
 	}
-	public String jogadaInfo(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
+	public String jogadaInfo(int numDado, int numPlay, int percurso, int getX, int getY) {
 		if (numPlay == 1) {
 			posKankuroX = getX;
 			posKankuroY = getY;
@@ -482,8 +483,6 @@ public class pecas extends Thread {
 					posKankuroY += 33;
 					percurso++;
 				}
-				sleep();
-
 
 			}
 		} else if (numPlay == 2) {
@@ -673,7 +672,7 @@ public class pecas extends Thread {
 				}
 			}
 		}
-		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
+		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY;
 		return informacoesParaCliente;
 	}
 

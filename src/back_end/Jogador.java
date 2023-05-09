@@ -81,20 +81,23 @@ public class Jogador extends Thread{
 			System.out.println("enviou");
 			//inputStream = socket.getInputStream();
 			requisicao = inB.readLine();
+			String[] recebe = requisicao.split(";");
 	        
 	        System.out.println("Servidor diz: " +requisicao);
 	       
 	        
-	        if(requisicao.equals("1")) {
+	        if(recebe[0].equals("1")) {
 				// ATIVAR O BOTAO DE SORTEIO
                 System.out.println("aki");
-             // CHAMA A FUNCAO JOGADA, 
-	        	String jogadaDoJogador = "123;333";//CHAMA A FUNCAO DE JOGADA PARA RETORNAR A JOGADA
-	        	
+                //aki chama função que recebe o primeira jogada
+                
+	        	String jogadaDoJogador = p.jogadaInfo(5, 1, 0, 480, 82);
+	        	System.out.println(jogadaDoJogador + ";" + recebe[1]);
+	        	//verificar a quantidade de peça
 	        	PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
 				pw.println(jogadaDoJogador);
 
-	        }else if(requisicao.equals("2")) {
+	        }else if(recebe[0].equals("2")) {
 	        	//atualizar tela
 	        	//mandar uma requisicao e depois um arquivo no servidor
 	            //JOGADOR RECEBE JOGADA DO SERVIDOR
@@ -103,17 +106,21 @@ public class Jogador extends Thread{
 	        	jogadas = inB.readLine();
 	        	//
 	        	
+	        	
 	        	System.out.println("jogadas: " + jogadas);
 	            String[] output = jogadas.split(";");//SEPARANDO OS PARAMETROS POR ;
+	            //Funcao para atualizar a tela
 	            //A FUNCAO DE CHAMADA PARA ATUALIZAR A TELA DO JOGADOR
+	            defineJogador(output[0], recebe[1], output[2], output[3] , output[4], output[5]);
 	            System.out.println(output[0]);
 	            this.setX(Integer.parseInt(output[0]));
 	            //chamar a funcao para atualizar a tela
 	            
 	        //jogador enviar quantas pecas tem
-	        }else if(requisicao.equals("3")) {
+	        }else if(recebe[0].equals("3")) {
 	        	PrintWriter pw = new PrintWriter(out, true); 
 				pw.println(this.qtdPeca);
+				pw.flush();
 	        }
 			
 	       
@@ -136,19 +143,23 @@ public class Jogador extends Thread{
 	
 
 
-	public void defineJogador(int numPlay) {
-		/*if(numPlay == 1) {
-			new pecas(kankuro, 5, numPlay, "kankuro").start();
+	public void defineJogador(String numDado, String numPlay, String percurso, String getX, String getY, String indexPeca) {
+		if(Integer.parseInt(numPlay) == 0) {
+			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
+					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"kankuro",kankuro).start();
 		}
-		if(numPlay == 2) {
-			new pecas(sasuke, 5, numPlay, "sasuke").start();
+		if(Integer.parseInt(numPlay) == 1) {
+			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
+					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"sasuke",sasuke).start();
 		}
-		if(numPlay == 3) {
-			new pecas(gaara, 5, numPlay, "gaara").start();
+		if(Integer.parseInt(numPlay) == 2) {
+			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
+					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"gaara",gaara).start();
 		}
-		if(numPlay == 4) {
-			new pecas(choji, 5, numPlay, "choji").start();
-		}*/
+		if(Integer.parseInt(numPlay) == 3) {
+			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
+					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"choji",choji).start();
+		}
 	}
 	
 
