@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -41,8 +42,6 @@ public class frame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Principal principal = new Principal();
-	private Servidor server = new Servidor();
-
 	private JLabel ip = new JLabel("IP");
 	private JLabel fundo = new JLabel(new ImageIcon(frame.class.getClassLoader().getResource("naruto.png")));
 	private JLabel port = new JLabel("Porta");
@@ -54,9 +53,8 @@ public class frame extends JFrame {
 	private JButton encontrarPartida = new JButton(
 			new ImageIcon(frame.class.getClassLoader().getResource("entrar_partida.png")));
 
-	Jogador j;
+	public static Jogador j;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -87,14 +85,14 @@ public class frame extends JFrame {
 		criarPartida.setContentAreaFilled(false);
 		criarPartida.setOpaque(false);
 		criarPartida.setBorder(null);
-		criarPartida.setBounds(120, 550, 250, 50);
+		criarPartida.setBounds(120, 550, 250, 100);
 		principal.add(criarPartida);
 
 		encontrarPartida.setFocusPainted(false);
 		encontrarPartida.setContentAreaFilled(false);
 		encontrarPartida.setOpaque(false);
 		encontrarPartida.setBorder(null);
-		encontrarPartida.setBounds(90, 400, 300, 74);
+		encontrarPartida.setBounds(90, 400, 300, 100);
 		principal.add(encontrarPartida);
 
 		fundo.setBackground(Color.BLACK);
@@ -106,7 +104,7 @@ public class frame extends JFrame {
 		ipValue.setHorizontalAlignment(SwingConstants.CENTER);
 		ipValue.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		ipValue.setText("127.0.0.1");
-
+		
 		ipValue.setBounds(150, 162, 200, 25);
 		portValue.setBackground(new Color(234, 234, 234));
 		portValue.setHorizontalAlignment(SwingConstants.CENTER);
@@ -133,7 +131,6 @@ public class frame extends JFrame {
 		ip.setBounds(240, 167, 20, 20);
 		port.setBounds(222, 265, 50, 20);
 
-
 		getContentPane().add(ip);
 		getContentPane().add(port);
 		getContentPane().add(ipValue);
@@ -142,11 +139,6 @@ public class frame extends JFrame {
 
 		EventoEntrarPartida();
 		EventoJogar(principal);
-		
-		JButton button = new JButton("New button");
-		button.setBounds(39, 99, 89, 23);
-		principal.add(button);
-		
 		EventosMouse();
 	}
 
@@ -154,34 +146,44 @@ public class frame extends JFrame {
 		criarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Panel contentPane = new Panel();
-				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-				setBounds(150, 10, 1000, 700);
-				contentPane.repaint();
-				contentPane.revalidate();
-				setContentPane(contentPane);
-				///implementar logica para startar server
-				System.out.printf(ipValue.getText() +"/"+ portValue.getText());
 				try {
-					Socket s = new Socket(ipValue.getText(), Integer.parseInt(portValue.getText()));
-					j = new Jogador(s);
-				} catch (NumberFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					//System.exit(0);
-				}
+					Servidor server = new Servidor(Integer.parseInt(portValue.getText()));
+					server.start();
+					JOptionPane.showMessageDialog(null, "Escutando na porta : " + portValue.getText() + "\n 1 - colocar IP e PORTA \n2 - Clique em encontrar partida");
+				} catch (NumberFormatException e1) {
 
+				}
 
 			}
 		});
-		
+
 	}
 
 	public void EventoEntrarPartida() {
 		encontrarPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				boolean aux = false;
+				try {
+					try {
+						Servidor s = new Servidor();
+						aux = s.CriarJogador(ipValue.getText(), Integer.parseInt(portValue.getText()));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (aux == true) {
+						Panel contentPane = new Panel();
+						contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+						setBounds(150, 10, 1000, 700);
+						contentPane.repaint();
+						contentPane.revalidate();
+						setContentPane(contentPane);
+					}
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
@@ -211,14 +213,14 @@ public class frame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				criarPartida.setBounds(120, 550, 250, 50);
+				criarPartida.setBounds(120, 550, 250, 100);
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				criarPartida.setBounds(120, 545, 250, 50);
+				criarPartida.setBounds(120, 545, 250, 100);
 				somHover();
 
 			}
@@ -246,13 +248,13 @@ public class frame extends JFrame {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				encontrarPartida.setBounds(90, 400, 300, 74);
+				encontrarPartida.setBounds(90, 400, 300, 100);
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				encontrarPartida.setBounds(90, 395, 300, 74);
+				encontrarPartida.setBounds(90, 395, 300, 100);
 				somHover();
 			}
 

@@ -1,7 +1,5 @@
 package front_end;
 
-
-
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
@@ -15,14 +13,21 @@ public class pecas extends Thread {
 	private int numDado;
 	private int numPlay;
 	private String personagem;
+	private int indexPeca;
+	private int percurso;
+	private int getX;
+	private int getY;
+	
+	
 	private ImageIcon img;
 	private int posX;
 	private int posY;
-	private int percurso;
-	private int numPeca;
 	
+	private String informacoesParaCliente = null; 
+	
+
 	// posições iniciais de origens das peças
-	private int[] initiaKankurolX = { 568, 622, 568, 622 };
+	private int[] initialKankuroX = { 568, 622, 568, 622 };
 	private int[] initialKankuroY = { 132, 132, 187, 187 };
 
 	private int[] initialSasukeX = { 568, 622, 568, 622 };
@@ -59,304 +64,634 @@ public class pecas extends Thread {
 	private int posChojiX;
 	private int posChojiY;
 
-	public pecas(JLabel peca[], int numDado, int numPlay, String personagem, int percurso, int numPeca) {
+	public pecas(int numDado, int numPlay, int percurso, int getX, int getY, int indexPeca, String personagem, JLabel[] peca) {
 		super();
-		this.peca = peca;
 		this.numDado = numDado;
 		this.numPlay = numPlay;
-		this.personagem = personagem;
 		this.percurso = percurso;
-		this.numPeca = numPeca;
-	}
-	
-	public pecas( String personagem, int posX, int posY) {
+		this.getX = getX;
+		this.getY = getY;
+		this.indexPeca = indexPeca;
 		this.personagem = personagem;
-		this.setPosX(posX);
-		this.setPosY(posY);
+		this.peca = peca;
 	}
-	
+	public pecas() {}
 
 	public void run() {
-		//while(true) {
-			//as thread ficam escultando e recebendo os valores do server aqui
-			jogada(numDado, peca[this.numPeca], numPlay, personagem, this.percurso);
-			sleep();sleep();sleep();sleep();sleep();
-			jogada(numDado, peca[this.numPeca], numPlay, personagem, this.percurso);
-		//}
-
+		//criar vetor de percurso
+		jogada(numDado, numPlay, percurso, getX, getY, peca[indexPeca], personagem);
 	}
-	
-	public void jogada(int numDado, JLabel peca, int numPlay, String personagem, int percurso) {
+
+	public void jogada(int numDado, int numPlay, int percurso, int getX, int getY, JLabel peca, String personagem) {
 		if (numPlay == 1) {
-			percurso = this.percurso;
-			for (int i = 1; i <= numDado; i++) {
-				Alternar(i, personagem, "frente");
+			posKankuroX = getX;
+			posKankuroY = getY;
+			for (int i = 0; i < numDado; i++) {
 				if (percurso <= 5) {
 					posKankuroY += 33;
-				}
-				if (percurso >= 5 && percurso < 11) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "frente", posKankuroX, posKankuroY, peca);
+					if (percurso == 5) {
+						posKankuroX = 513;
+						posKankuroY = 280;
+						Alternar(percurso, personagem, "direita", posKankuroX, posKankuroY, peca);
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
 					posKankuroX += 33;
-				}
-				if (percurso >= 11 && percurso < 13) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "direita", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
 					posKankuroY += 33;
-				}
-				if (percurso >= 13 && percurso <= 18) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(percurso, personagem, "frente", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 13 && percurso < 18) {
 					posKankuroX -= 33;
-				}
-				if (percurso >= 18 && percurso < 24) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "esquerda", posKankuroX, posKankuroY, peca);
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posKankuroX = 480;
+						posKankuroY = 346;
+						Alternar(percurso, personagem, "frente", posKankuroX, posKankuroY, peca);
+					}
+					percurso++;
 					posKankuroY += 33;
-				}
-				if (percurso >= 24 && percurso < 26) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(percurso, personagem, "frente", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
 					posKankuroX -= 33;
-				}
-				if (percurso >= 26 && percurso <= 31) {
-					Alternar(i, personagem, "costa");
+					Alternar(i, personagem, "esquerda", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 26 && percurso < 31) {
 					posKankuroY -= 33;
-				}
-				if (percurso >= 31 && percurso < 37) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(i, personagem, "costa", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posKankuroX = 414;
+						posKankuroY = 346;
+						Alternar(percurso, personagem, "esquerda", posKankuroX, posKankuroY, peca);
+					}
 					posKankuroX -= 33;
-				}
-				if (percurso >= 37 && percurso < 39) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 37 && percurso < 39) {
 					posKankuroY -= 33;
-				}
-				if (percurso >= 39 && percurso <= 44) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(percurso, personagem, "costa", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 39 && percurso < 44) {
 					posKankuroX += 33;
-				}
-				if (percurso >= 44 && percurso < 50) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "direita", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posKankuroX = 414;
+						posKankuroY = 280;
+						Alternar(percurso, personagem, "costa", posKankuroX, posKankuroY, peca);
+					}
 					posKankuroY -= 33;
-				}
-				if (percurso >= 50 && percurso < 51) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(percurso, personagem, "costa", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 50 && percurso < 51) {
 					posKankuroX += 33;
-				}
-				if (percurso >= 51 && percurso < 57) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(percurso, personagem, "direita", posKankuroX, posKankuroY, peca);
+				} else if (percurso >= 51 && percurso < 58) {
 					posKankuroY += 33;
+					percurso++;
+					Alternar(percurso, personagem, "frente", posKankuroX, posKankuroY, peca);
 				}
 				sleep();
 				peca.setIcon(img);
-				peca.setLocation(posKankuroX, posKankuroY);
 				if (percurso == 57) {
+					// bota logica pra remover a peça
 					Ataque(peca, personagem);
 				}
-				percurso += i;
+
 			}
 		} else if (numPlay == 2) {
-			posSasukeX = saidaSasukeX;
-			posSasukeY = saidaSasukeY;
+			posSasukeX = getX;
+			posSasukeY = getY;
 			for (int i = 0; i < numDado; i++) {
-				Alternar(i, personagem, "esquerda");
-				if (i <= 5) {
+				if (percurso <= 5) {
 					posSasukeX -= 33;
-				}
-				if (i >= 5 && i < 11) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "esquerda", posSasukeX, posSasukeY, peca);
+					if (percurso == 5) {
+						posSasukeX = 480;
+						posSasukeY = 379;
+						Alternar(percurso, personagem, "frente", posSasukeX, posSasukeY, peca);
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
 					posSasukeY += 33;
-				}
-				if (i >= 11 && i < 13) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(percurso, personagem, "frente", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
 					posSasukeX -= 33;
-				}
-				if (i >= 13 && i <= 18) {
-					Alternar(i, personagem, "costa");
+					Alternar(percurso, personagem, "esquerda", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 13 && percurso < 18) {
 					posSasukeY -= 33;
-				}
-				if (i >= 18 && i < 24) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(percurso, personagem, "costa", posSasukeX, posSasukeY, peca);
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posSasukeX = 414;
+						posSasukeY = 346;
+						Alternar(percurso, personagem, "esquerda", posSasukeX, posSasukeY, peca);
+					}
+					percurso++;
 					posSasukeX -= 33;
-				}
-				if (i >= 24 && i < 26) {
-					Alternar(i, personagem, "costa");
+					Alternar(percurso, personagem, "esquerda", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
 					posSasukeY -= 33;
-				}
-				if (i >= 26 && i <= 31) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "costa", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 26 && percurso < 31) {
 					posSasukeX += 33;
-				}
-				if (i >= 31 && i < 37) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "direita", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posSasukeX = 414;
+						posSasukeY = 280;
+						Alternar(percurso, personagem, "costa", posSasukeX, posSasukeY, peca);
+					}
 					posSasukeY -= 33;
-				}
-				if (i >= 37 && i < 39) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(i, personagem, "costa", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 37 && percurso < 39) {
 					posSasukeX += 33;
-				}
-				if (i >= 39 && i <= 44) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(i, personagem, "direita", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 39 && percurso < 44) {
 					posSasukeY += 33;
-				}
-				if (i >= 44 && i < 50) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(i, personagem, "frente", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posSasukeX = 480;
+						posSasukeY = 280;
+						Alternar(percurso, personagem, "direita", posSasukeX, posSasukeY, peca);
+					}
 					posSasukeX += 33;
-				}
-				if (i >= 50 && i < 51) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(percurso, personagem, "direita", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 50 && percurso < 51) {
 					posSasukeY += 33;
-				}
-				if (i >= 51 && i < 57) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(percurso, personagem, "frente", posSasukeX, posSasukeY, peca);
+				} else if (percurso >= 51 && percurso < 58) {
 					posSasukeX -= 33;
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posSasukeX, posSasukeY, peca);
 				}
 				sleep();
 				peca.setIcon(img);
-				peca.setLocation(posSasukeX, posSasukeY);
-				if (i == 57) {
+				if (percurso == 57) {
+					// bota logica pra remover a peça
 					Ataque(peca, personagem);
 				}
 			}
 		} else if (numPlay == 3) {
-			posGaaraX = saidaGaaraX;
-			posGaaraY = saidaGaaraY;
+			posGaaraX = getX;
+			posGaaraY = getY;
 			for (int i = 0; i < numDado; i++) {
-				Alternar(i, personagem, "costa");
-				if (i <= 5) {
+				if (percurso <= 5) {
 					posGaaraY -= 33;
-				}
-				if (i >= 5 && i < 11) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(percurso, personagem, "costa", posGaaraX, posGaaraY, peca);
+					if (percurso == 5) {
+						posGaaraX = 381;
+						posGaaraY = 346;
+						Alternar(percurso, personagem, "esquerda", posGaaraX, posGaaraY, peca);
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
 					posGaaraX -= 33;
-				}
-				if (i >= 11 && i < 13) {
-					Alternar(i, personagem, "costa");
+					Alternar(percurso, personagem, "esquerda", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
 					posGaaraY -= 33;
-				}
-				if (i >= 13 && i <= 18) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "costa", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 13 && percurso < 18) {
 					posGaaraX += 33;
-				}
-				if (i >= 18 && i < 24) {
-					Alternar(i, personagem, "costa");
+					Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posGaaraX = 414;
+						posGaaraY = 280;
+						Alternar(percurso, personagem, "costa", posGaaraX, posGaaraY, peca);
+					}
+					percurso++;
 					posGaaraY -= 33;
-				}
-				if (i >= 24 && i < 26) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "costa", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
 					posGaaraX += 33;
-				}
-				if (i >= 26 && i <= 31) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 26 && percurso < 31) {
 					posGaaraY += 33;
-				}
-				if (i >= 31 && i < 37) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posGaaraX = 480;
+						posGaaraY = 280;
+						Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
+					}
 					posGaaraX += 33;
-				}
-				if (i >= 37 && i < 39) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(percurso, personagem, "direita", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 37 && percurso < 39) {
 					posGaaraY += 33;
-				}
-				if (i >= 39 && i <= 44) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 39 && percurso < 44) {
 					posGaaraX -= 33;
-				}
-				if (i >= 44 && i < 50) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posGaaraX = 480;
+						posGaaraY = 346;
+						Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
+					}
 					posGaaraY += 33;
-				}
-				if (i >= 50 && i < 51) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(percurso, personagem, "frente", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 50 && percurso < 51) {
 					posGaaraX -= 33;
-				}
-				if (i >= 51 && i < 57) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posGaaraX, posGaaraY, peca);
+				} else if (percurso >= 51 && percurso < 58) {
 					posGaaraY -= 33;
+					percurso++;
+					Alternar(percurso, personagem, "costa", posGaaraX, posGaaraY, peca);
 				}
 				sleep();
 				peca.setIcon(img);
-				peca.setLocation(posGaaraX, posGaaraY);
-				if (i == 57) {
+				if (percurso == 57) {
+					// bota logica pra remover a peça
 					Ataque(peca, personagem);
 				}
 			}
 		} else if (numPlay == 4) {
-			posChojiX = saidaChojiX;
-			posChojiY = saidaChojiY;
+			posChojiX = getX;
+			posChojiY = getY;
 			for (int i = 0; i < numDado; i++) {
-				Alternar(i, personagem, "direita");
-				if (i <= 5) {
+				if (percurso <= 5) {
 					posChojiX += 33;
-				}
-				if (i >= 5 && i < 11) {
-					Alternar(i, personagem, "costa");
+					Alternar(percurso, personagem, "direita", posChojiX, posChojiY, peca);
+					if (percurso == 5) {
+						posChojiX = 414;
+						posChojiY = 247;
+						Alternar(percurso, personagem, "costa", posChojiX, posChojiY, peca);
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
 					posChojiY -= 33;
-				}
-				if (i >= 11 && i < 13) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "costa", posChojiX, posChojiY, peca);
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
 					posChojiX += 33;
-				}
-				if (i >= 13 && i <= 18) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "esquerda", posChojiX, posChojiY, peca);
+				} else if (percurso >= 13 && percurso < 18) {
 					posChojiY += 33;
-				}
-				if (i >= 18 && i < 24) {
-					Alternar(i, personagem, "direita");
+					Alternar(percurso, personagem, "frente", posChojiX, posChojiY, peca);
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						posChojiX = 480;
+						posChojiY = 280;
+						Alternar(percurso, personagem, "direita", posChojiX, posChojiY, peca);
+					}
+					percurso++;
 					posChojiX += 33;
-				}
-				if (i >= 24 && i < 26) {
-					Alternar(i, personagem, "frente");
+					Alternar(percurso, personagem, "direita", posChojiX, posChojiY, peca);
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
 					posChojiY += 33;
-				}
-				if (i >= 26 && i <= 31) {
-					Alternar(i, personagem, "esquerda");
+					Alternar(i, personagem, "frente", posChojiX, posChojiY, peca);
+				} else if (percurso >= 26 && percurso < 31) {
 					posChojiX -= 33;
-				}
-				if (i >= 31 && i < 37) {
-					Alternar(i, personagem, "frente");
+					percurso++;
+					Alternar(i, personagem, "esquerda", posChojiX, posChojiY, peca);
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						posChojiX = 480;
+						posChojiY = 346;
+						Alternar(percurso, personagem, "frente", posChojiX, posChojiY, peca);
+					}
 					posChojiY += 33;
-				}
-				if (i >= 37 && i < 39) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(percurso, personagem, "frente", posChojiX, posChojiY, peca);
+				} else if (percurso >= 37 && percurso < 39) {
 					posChojiX -= 33;
-				}
-				if (i >= 39 && i <= 44) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posChojiX, posChojiY, peca);
+				} else if (percurso >= 39 && percurso < 44) {
 					posChojiY -= 33;
-				}
-				if (i >= 44 && i < 50) {
-					Alternar(i, personagem, "esquerda");
+					percurso++;
+					Alternar(percurso, personagem, "costa", posChojiX, posChojiY, peca);
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						posChojiX = 414;
+						posChojiY = 346;
+						Alternar(percurso, personagem, "esquerda", posChojiX, posChojiY, peca);
+					}
 					posChojiX -= 33;
-				}
-				if (i >= 50 && i < 51) {
-					Alternar(i, personagem, "costa");
+					percurso++;
+					Alternar(percurso, personagem, "esquerda", posChojiX, posChojiY, peca);
+				} else if (percurso >= 50 && percurso < 51) {
 					posChojiY -= 33;
-				}
-				if (i >= 51 && i < 57) {
-					Alternar(i, personagem, "direita");
+					percurso++;
+					Alternar(percurso, personagem, "costa", posChojiX, posChojiY, peca);
+				} else if (percurso >= 51 && percurso < 58) {
 					posChojiX += 33;
+					percurso++;
+					Alternar(percurso, personagem, "direita", posChojiX, posChojiY, peca);
 				}
 				sleep();
 				peca.setIcon(img);
-				peca.setLocation(posChojiX, posChojiY);
-				if (i == 57) {
+				if (percurso == 57) {
+					// bota logica pra remover a peça
 					Ataque(peca, personagem);
 				}
 			}
 		}
+		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY+";"+indexPeca+";"+personagem;
+	}
+	public String jogadaInfo(int numDado, int numPlay, int percurso, int getX, int getY) {
+		if (numPlay == 1) {
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					getY += 33;
+					if (percurso == 5) {
+						getX = 513;
+						getY = 280;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					getX += 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					getY += 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						getX = 480;
+						getY = 346;
+					}
+					percurso++;
+					getY += 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					getX -= 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						getX = 414;
+						getY = 346;
+					}
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						getX = 414;
+						getY = 280;
+					}
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					getY += 33;
+					percurso++;
+				}
+
+			}
+		} else if (numPlay == 2) {
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					getX -= 33;
+					if (percurso == 5) {
+						getX = 480;
+						getY = 379;
+					}
+					getX = posSasukeX;
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					getY += 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					getX -= 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						getX = 414;
+						getY = 346;
+					}
+					percurso++;
+					getX -= 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					getY -= 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						getX = 414;
+						getY = 280;
+					}
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						getX = 480;
+						getY = 280;
+					}
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					getX -= 33;
+					percurso++;
+				}
+			}
+		} else if (numPlay == 3) {
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					getY -= 33;
+					if (percurso == 5) {
+						getX = 381;
+						getY = 346;
+					}
+					percurso++;
+					//aqui nao esta seguindo o padrao dos outros
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					getX -= 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					getY -= 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						getX = 414;
+						getY = 280;
+					}
+					percurso++;
+					getY -= 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					posGaaraX += 33;
+					getX = posGaaraX;
+				} else if (percurso >= 26 && percurso < 31) {
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						getX = 480;
+						getY = 280;
+					}
+					getX += 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						getX = 480;
+						getY = 346;
+					}
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					getY -= 33;
+					percurso++;
+				}
+			}
+		} else if (numPlay == 4) {
+			for (int i = 0; i < numDado; i++) {
+				if (percurso <= 5) {
+					getX += 33;
+					if (percurso == 5) {
+						getX = 414;
+						getY = 247;
+					}
+					percurso++;
+				} else if (percurso > 5 && percurso < 11) {
+					percurso++;
+					getY -= 33;
+				} else if (percurso >= 11 && percurso < 13) {
+					percurso++;
+					getX += 33;
+				} else if (percurso >= 13 && percurso < 18) {
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 18 && percurso < 24) {
+					if (percurso == 18) {
+						getX = 480;
+						getY = 280;
+					}
+					percurso++;
+					getX += 33;
+				} else if (percurso >= 24 && percurso < 26) {
+					percurso++;
+					getY += 33;
+				} else if (percurso >= 26 && percurso < 31) {
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 31 && percurso < 37) {
+					if (percurso == 31) {
+						getX = 480;
+						getY = 346;
+					}
+					getY += 33;
+					percurso++;
+				} else if (percurso >= 37 && percurso < 39) {
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 39 && percurso < 44) {
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 44 && percurso < 50) {
+					if (percurso == 44) {
+						getX = 414;
+						getY = 346;
+					}
+					getX -= 33;
+					percurso++;
+				} else if (percurso >= 50 && percurso < 51) {
+					getY -= 33;
+					percurso++;
+				} else if (percurso >= 51 && percurso < 58) {
+					getX += 33;
+					percurso++;
+				}
+				if (percurso == 57) {
+					// bota logica pra remover a peça
+				}
+			}
+		}
+		informacoesParaCliente = numDado+";"+numPlay+";"+percurso+";"+getX+";"+getY;
+		return informacoesParaCliente;
 	}
 
 	private void Ataque(JLabel peca, String personagem) {
-		peca.setIcon(new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_ataque.png")));
+		peca.setIcon(
+				new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_ataque.png")));
 		vozPersonagem(personagem);
 		for (int j = 0; j < 4; j++) {
 			sleep();
 		}
-		peca.setIcon(new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_frente1.png")));
+		peca.setIcon(new ImageIcon(
+				Panel.class.getClassLoader().getResource(personagem + "/" + personagem + "_frente1.png")));
 	}
 
-	private void Alternar(int i, String personage, String coordenada) {
-		if (i % 2 == 0) {
-			img = new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personage + "_" + coordenada + "1.png"));
+	private void Alternar(int i, String personage, String coordenada, int posX, int posY, JLabel peca) {
+		if (i % 2 == 1) {
+			img = new ImageIcon(Panel.class.getClassLoader()
+					.getResource(personagem + "/" + personage + "_" + coordenada + "1.png"));
 		} else {
-			img = new ImageIcon(Panel.class.getClassLoader().getResource(personagem + "/" + personage + "_" + coordenada + "2.png"));
+			img = new ImageIcon(Panel.class.getClassLoader()
+					.getResource(personagem + "/" + personage + "_" + coordenada + "2.png"));
 		}
+		peca.setLocation(posX, posY);
 	}
 
 	public void vozPersonagem(String personagem) {
@@ -379,7 +714,7 @@ public class pecas extends Thread {
 
 	public void sleep() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(100);
+			TimeUnit.MILLISECONDS.sleep(250);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
