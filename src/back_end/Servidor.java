@@ -51,10 +51,11 @@ public class Servidor extends Thread {
 			}
 			listJogador.add(s);
 			
-			IniciaJogo();
+			
 			// criando as pecas
 			// criando variavel para armazena no vetor e atribuir os jogadores
 		}
+		IniciaJogo();
 		// pausa o servidor temporariamente
 		serverSocket.close();
 	}
