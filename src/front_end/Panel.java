@@ -98,6 +98,7 @@ public class Panel extends JPanel {
 				Jogador jogador = new Jogador(kankuro,sasuke,gaara,choji,0);
 				//aki eu passo as referencias dos jogadores e chamo a função de sortear o dado
 				//receber função q recebe o retorno do vaor do dado
+				new pecas(6,1,0,480, 82, 0, "kankuro",kankuro).start();
 				dado.setIcon(new ImageIcon(getClass().getClassLoader().getResource("dado/dado"+ jogador.numAleatorio() +".png")));
 				//jogador.defineJogador(1);
 				

@@ -3,6 +3,7 @@ package back_end;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.JOptionPane;
 
@@ -43,19 +44,21 @@ public class Servidor extends Thread {
 			System.exit(-1);
 		}
 		// pode modificar esse parametro para receber novas conexoes
-		while (listJogador.size() < 4) {
+		while (listJogador.size() < 2) {
 			s = serverSocket.accept();
 			System.out.println("conectou jogador" + s.getInetAddress());
 			if (listJogador.size() == 2) {
 				serverSocket.setSoTimeout(30000);
 			}
 			listJogador.add(s);
-			
-			
+
 			// criando as pecas
 			// criando variavel para armazena no vetor e atribuir os jogadores
 		}
 		IniciaJogo();
+		for (int i = 0; listJogador.size() < 4; i++) {
+			listJogador.get(i).close();
+		}
 		// pausa o servidor temporariamente
 		serverSocket.close();
 	}
@@ -77,25 +80,12 @@ public class Servidor extends Thread {
 			j = new Jogador(soketJogador);
 			j.start();
 			return true;
-			
-			 } else { 
-				 return false; 
-			 }
-			 
+
+		} else {
+			return false;
+		}
+
 	}
-
-	/*
-	 * Socket sj2 = new Socket("127.0.0.1", 8000); j2 = new Jogador(sj2);
-	 * j2.start(); s = serverSocket.accept(); listJogador.add(s);
-	 */
-
-	// System.out.println("Entrou");
-//			listJogador.add(j);
-//			System.out.println(listJogador.get(0).getSocket().getPort());
-	// criar metodo ao inves de thread
-	// j.start();
-
-	// logica do jogo
 
 	// mudar daqui pois os valores não estão preparado ai fica com exceçãp
 	public static void IniciaJogo() {
@@ -107,7 +97,7 @@ public class Servidor extends Thread {
 		// o jogador que vai fazer a jogada no round
 		int valorDoDado;
 		boolean jogada = true;
-		//String[] qtdPecas = EnviarPecas(listJogador);
+		// String[] qtdPecas = EnviarPecas(listJogador);
 		try {
 			while (true) {
 				while (jogada) {
@@ -126,7 +116,7 @@ public class Servidor extends Thread {
 						// JOGADOR, SE NAO CONTINUA O // MESMO JOGADOR jogada = false; i++;
 						jogada = false;
 						i++;
-						
+
 					} else {
 						jogada = true;
 					} // no caso do incremento passar de 4, ja que só
@@ -136,7 +126,7 @@ public class Servidor extends Thread {
 						i = 0;
 					}
 				}
-				//mudar isso
+				// mudar isso
 				jogadorDaVez = listJogador.get(0);
 
 			}
@@ -161,7 +151,7 @@ public class Servidor extends Thread {
 
 	// AVISANDO AO JOGADOR QUE E A VEZ DELE
 	public static String RequisicaoAoJogador(Socket s, int i) throws IOException {
-		String requisicao = "1"+ ";" + i;
+		String requisicao = "1" + ";" + i;
 		String jogada = "";
 
 		try {

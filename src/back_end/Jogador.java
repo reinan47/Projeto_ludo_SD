@@ -78,7 +78,7 @@ public class Jogador extends Thread{
 				// ATIVAR O BOTAO DE SORTEIO
                 //aki chama função que recebe o primeira jogada
                 
-	        	String jogadaDoJogador = p.jogadaInfo(dado, 1, 0, 480, 82);
+	        	String jogadaDoJogador = p.jogadaInfo(6, 1, 0, 480, 82);
 	        	jogadaDoJogador = jogadaDoJogador + ";" + recebe[1]; //recebe é o numero do  jogador na ordem da lista do socket
 	        	System.out.println(jogadaDoJogador);
 	        	//verificar a quantidade de peça
@@ -113,7 +113,7 @@ public class Jogador extends Thread{
 	            //A FUNCAO DE CHAMADA PARA ATUALIZAR A TELA DO JOGADOR
 	            //defineJogador("5","1","5","480","82", "1"); 
 	                                                         //O GET X E Y NAO SE ATUALIZAR ?
-	            defineJogador(dado, numPlay, percurso, getX , getY, indexPeca);
+	            //defineJogador(dado, numPlay, percurso, getX , getY, indexPeca);
 	            
 	            //this.setX(Integer.parseInt(output[0]));
 	            //chamar a funcao para atualizar a tela
