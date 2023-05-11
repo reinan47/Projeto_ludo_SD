@@ -13,16 +13,17 @@ public class pecas extends Thread {
 	private int numDado;
 	private int numPlay;
 	private String personagem;
-	private ImageIcon img;
-	private int posX;
-	private int posY;
-	
-	
-	private String informacoesParaCliente = null; 
 	private int indexPeca;
 	private int percurso;
 	private int getX;
 	private int getY;
+	
+	
+	private ImageIcon img;
+	private int posX;
+	private int posY;
+	
+	private String informacoesParaCliente = null; 
 	
 
 	// posições iniciais de origens das peças

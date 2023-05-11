@@ -104,7 +104,7 @@ public class frame extends JFrame {
 		ipValue.setHorizontalAlignment(SwingConstants.CENTER);
 		ipValue.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		ipValue.setText("127.0.0.1");
-
+		
 		ipValue.setBounds(150, 162, 200, 25);
 		portValue.setBackground(new Color(234, 234, 234));
 		portValue.setHorizontalAlignment(SwingConstants.CENTER);

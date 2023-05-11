@@ -43,18 +43,13 @@ public class Servidor extends Thread {
 			System.exit(-1);
 		}
 		// pode modificar esse parametro para receber novas conexoes
-		while (listJogador.size() < 1) {
-			if (listJogador.size() == 1) {
+		while (listJogador.size() < 4) {
+			s = serverSocket.accept();
+			System.out.println("conectou jogador" + s.getInetAddress());
+			if (listJogador.size() == 2) {
 				serverSocket.setSoTimeout(30000);
 			}
-			try {
-				s = serverSocket.accept();
-				listJogador.add(s);
-				System.out.println("conectou jogador" + s.getInetAddress());
-			} catch (SocketTimeoutException e) {
-				JOptionPane.showMessageDialog(null, "Servidor fechado por inatividade");
-				serverSocket.close();
-			}
+			listJogador.add(s);
 			
 			IniciaJogo();
 			// criando as pecas
@@ -77,13 +72,15 @@ public class Servidor extends Thread {
 			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Essas endereços não correspondem a uma partida válida");
 		}
-		/* if (soketJogador != null) { */
+		if (soketJogador != null) {
 			j = new Jogador(soketJogador);
 			j.start();
 			return true;
-			/*
-			 * } else { return false; }
-			 */
+			
+			 } else { 
+				 return false; 
+			 }
+			 
 	}
 
 	/*

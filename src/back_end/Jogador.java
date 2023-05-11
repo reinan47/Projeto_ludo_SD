@@ -18,7 +18,7 @@ public class Jogador extends Thread{
 	
 	private OutputStream outputStream;
 	private InputStream inputStream;
-	private JLabel[] kankuro = new JLabel[57];
+	private JLabel[] kankuro;
 	private JLabel[] sasuke = new JLabel[57];
 	private JLabel[] gaara = new JLabel[57];
 	private JLabel[] choji = new JLabel[57];;
@@ -39,21 +39,21 @@ public class Jogador extends Thread{
 		this.peca = p;
 		this.dado = dado;
 	}
-	public Jogador(JLabel[] kankuro, JLabel[] sasuke, JLabel[] gaara, JLabel[] choji) {
+	public Jogador(JLabel[] kankuro, JLabel[] sasuke, JLabel[] gaara, JLabel[] choji, int dado) {
 		this.kankuro = kankuro;
 		this.sasuke = sasuke;
 		this.gaara = gaara;
 		this.choji = choji;
-	}
-	public Jogador(String ip, int port) {
-		
+		this.dado = dado;
 	}
 	public void run()  {
+
 		String requisicao =" ";
 		try {
 		while(true)
 		{
-		
+			//pecas p = new pecas(6,1,0,150,200,1,"kankuro",kankuro);
+			//p.start();
 		    InputStream inputStream = socket.getInputStream();
 
             //DataInputStream in = new DataInputStream(inputStream);
@@ -66,6 +66,7 @@ public class Jogador extends Thread{
             
            
 			System.out.println("enviou");
+			
 			//inputStream = socket.getInputStream();
 			requisicao = inB.readLine();
 			String[] recebe = requisicao.split(";");
@@ -75,10 +76,9 @@ public class Jogador extends Thread{
 	        
 	        if(recebe[0].equals("1")) {
 				// ATIVAR O BOTAO DE SORTEIO
-                System.out.println("aki");
                 //aki chama função que recebe o primeira jogada
                 
-	        	String jogadaDoJogador = p.jogadaInfo(5, 1, 0, 480, 82);
+	        	String jogadaDoJogador = p.jogadaInfo(dado, 1, 0, 480, 82);
 	        	jogadaDoJogador = jogadaDoJogador + ";" + recebe[1]; //recebe é o numero do  jogador na ordem da lista do socket
 	        	System.out.println(jogadaDoJogador);
 	        	//verificar a quantidade de peça
@@ -97,8 +97,13 @@ public class Jogador extends Thread{
 	        	
 	        	System.out.println("jogadas: " + jogadas);
 	            String[] output = jogadas.split(";");//SEPARANDO OS PARAMETROS POR ;
+	            dado = Integer.parseInt(output[0]);
+	            int numPlay = Integer.parseInt(output[1]); 
+	            int percurso = Integer.parseInt(output[2]);
+				int getX = Integer.parseInt(output[3]);
+				int getY = Integer.parseInt(output[4]);
+				int indexPeca = Integer.parseInt(output[5]);
 	            int i = 0;
-	            System.out.println(output.length);
 	            /*for(String s : output) {
 	            	System.out.println(s + " " + i);
 	                i++;
@@ -108,11 +113,10 @@ public class Jogador extends Thread{
 	            //A FUNCAO DE CHAMADA PARA ATUALIZAR A TELA DO JOGADOR
 	            //defineJogador("5","1","5","480","82", "1"); 
 	                                                         //O GET X E Y NAO SE ATUALIZAR ?
-	            defineJogador(output[0], output[1], output[2], "513" , "280", "0");
-	            System.out.println(output[0]);
+	            defineJogador(dado, numPlay, percurso, getX , getY, indexPeca);
+	            
 	            //this.setX(Integer.parseInt(output[0]));
 	            //chamar a funcao para atualizar a tela
-	            
 	        //jogador enviar quantas pecas tem
 	        }else if(recebe[0].equals("3")) {
 	        	PrintWriter pw = new PrintWriter(out, true); 
@@ -138,27 +142,23 @@ public class Jogador extends Thread{
 		
 	}
 	
-
     //EM NEW PECAS EM VEZ DE PASSAR UM JLABEL DE PECA, TA PASSANDO UM INTEIRO
-	public void defineJogador(String numDado, String numPlay, String percurso, String getX, String getY, String indexPeca) {
-		if(numPlay.equals("0")) {
-			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
-					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"kankuro",kankuro).start();
+	public void defineJogador(int numDado, int numPlay, int percurso, int getX, int getY, int indexPeca) {
+		if(numPlay == 0) {
+			new pecas(numDado, numPlay, percurso,getX,getY,indexPeca,"kankuro",kankuro).start();
 		}
-		else if(numPlay.equals("1")) {
-			for(int i = 0; i < 57; i++) {
-				sasuke[i] = new JLabel();//se tirar essa inicializacao aaqui, vai dar erro pq. os label vao ser null
-			}    //linha 92 e 699 erros
-			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
-					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"sasuke",sasuke).start();
+		else if(numPlay == 1) {
+			/*
+			 * for(int i = 0; i < 57; i++) { sasuke[i] = new JLabel();//se tirar essa
+			 * inicializacao aaqui, vai dar erro pq. os label vao ser null }
+			 */   //linha 92 e 699 erros
+			new pecas(numDado, numPlay, percurso,getX,getY,indexPeca,"sasuke",sasuke).start();
 		}
-		else if(numPlay.equals("2")) {
-			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
-					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"gaara",gaara).start();
+		else if(numPlay == 2) {
+			new pecas(numDado, numPlay, percurso,getX,getY,indexPeca,"gaara",gaara).start();
 		}
-		else if(numPlay.equals("3")) {
-			new pecas(Integer.parseInt(numDado), Integer.parseInt(numPlay), Integer.parseInt(percurso),
-					Integer.parseInt(getX),Integer.parseInt(getY),Integer.parseInt(indexPeca),"choji",choji).start();
+		else if(numPlay == 3) {
+			new pecas(numDado, numPlay, percurso,getX,getY,indexPeca,"choji",choji).start();
 		}
 	}
 	
@@ -166,7 +166,8 @@ public class Jogador extends Thread{
 	
 	public int numAleatorio() {
 		Random gerador = new Random();
-		return gerador.nextInt(6) + 1;
+		this.dado = gerador.nextInt(6) + 1;;
+		return dado;
 	}
 
 	public int getDado() {

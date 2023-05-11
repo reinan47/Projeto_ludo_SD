@@ -24,7 +24,7 @@ public class Panel extends JPanel {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	pecas p = new pecas();
+	
 
 	private JLabel tabuleiro = new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("tabuleiro_jogo.png")));
 
@@ -45,31 +45,32 @@ public class Panel extends JPanel {
 	private ImageIcon dadoPadrao = new ImageIcon(getClass().getClassLoader().getResource("dado/dado1.png"));
 
 	// personagens
-	private JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
+	public JLabel[] kankuro = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("kankuro/kankuro_frente1.png"))) };
 
-	private JLabel[] choji = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
+	public JLabel[] choji = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("choji/choji_frente1.png"))) };
 
-	private JLabel[] gaara = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
+	public JLabel[] gaara = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("gaara/gaara_frente1.png"))) };
 
-	private JLabel[] sasuke = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
+	public JLabel[] sasuke = { new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))),
 			new JLabel(new ImageIcon(Panel.class.getClassLoader().getResource("sasuke/sasuke_frente1.png"))) };
-	private Jogador jogador = new Jogador(kankuro,sasuke,gaara,choji);
+	
+	
 	/**
 	 * Create the panel.
 	 */
 	public Panel() {
-
+		
 		somFundo.start();
 		sound.addActionListener(new ActionListener() {
 			@Override
@@ -94,12 +95,13 @@ public class Panel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Jogador jogador = new Jogador(kankuro,sasuke,gaara,choji,0);
 				//aki eu passo as referencias dos jogadores e chamo a função de sortear o dado
 				//receber função q recebe o retorno do vaor do dado
-				dado.setIcon(new ImageIcon(getClass().getClassLoader().getResource("dado/dado" + jogador.numAleatorio() + ".png")));
+				dado.setIcon(new ImageIcon(getClass().getClassLoader().getResource("dado/dado"+ jogador.numAleatorio() +".png")));
 				//jogador.defineJogador(1);
-				//System.out.println(p.jogadaInfo(5, 1, 0, 10, 20, kankuro[3], "kankuro"));
 				
+				//System.out.println(p.jogadaInfo(5, 1, 0, 10, 20, kankuro[3], "kankuro"));
 			}
 		});
 		setLocale(null);
@@ -167,27 +169,6 @@ public class Panel extends JPanel {
 		add(tabuleiro);
 		add(logo);
 		add(fundo);
-
-
-		// de acordo com a resposta do servidor que virá aki será direcionado
-		// um vetor com as pecas para uma thread, que moverá a peca de acordo com a
-		// jogada,
-		// que o servidor sorteará.
-		// espera e deifne vez
-		
-		//new pecas(kankuro, 0, 1, "kankuro").start();
-
-		//new pecas(sasuke, 0, 2, "sasuke").start();
-
-		//new pecas(gaara, 0, 3, "gaara").start();
-
-		
-		
-		
-		//envia depois de mexido
-		
-		
-
 	}
 
 }
