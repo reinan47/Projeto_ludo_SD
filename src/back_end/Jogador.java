@@ -47,19 +47,21 @@ public class Jogador extends Thread{
 		this.dado = dado;
 	}
 	public void run()  {
-
+		  
 		String requisicao =" ";
 		try {
+			InputStream inputStream = socket.getInputStream();
+
+	          //DataInputStream in = new DataInputStream(inputStream);
+	          BufferedReader inB = new BufferedReader(new InputStreamReader(inputStream)); 
+	          
+	          OutputStream out = socket.getOutputStream();
+	          PrintWriter pw = new PrintWriter(out, true);
 		while(true)
 		{
 			//pecas p = new pecas(6,1,0,150,200,1,"kankuro",kankuro);
 			//p.start();
-		    InputStream inputStream = socket.getInputStream();
-
-            //DataInputStream in = new DataInputStream(inputStream);
-            BufferedReader inB = new BufferedReader(new InputStreamReader(inputStream)); 
-            
-            OutputStream out = socket.getOutputStream();
+		  
 
             
             System.out.println("antes de ler do servidor");
@@ -82,7 +84,7 @@ public class Jogador extends Thread{
 	        	jogadaDoJogador = jogadaDoJogador + ";" + recebe[1]; //recebe é o numero do  jogador na ordem da lista do socket
 	        	System.out.println(jogadaDoJogador);
 	        	//verificar a quantidade de peça
-	        	PrintWriter pw = new PrintWriter(out, true); // o segundo parametro "true" é para habilitar a autoflush do buffer
+	        	 // o segundo parametro "true" é para habilitar a autoflush do buffer
 				pw.println(jogadaDoJogador);
 
 	        }else if(recebe[0].equals("2")) {
@@ -119,7 +121,7 @@ public class Jogador extends Thread{
 	            //chamar a funcao para atualizar a tela
 	        //jogador enviar quantas pecas tem
 	        }else if(recebe[0].equals("3")) {
-	        	PrintWriter pw = new PrintWriter(out, true); 
+	        	
 				pw.println(this.qtdPeca);
 				pw.flush();
 	        }

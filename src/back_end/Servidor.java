@@ -92,12 +92,11 @@ public class Servidor extends Thread {
 		int i = 0;
 		// dedicando as pecas ao jogadores
 		i = 0;
-		Socket jogadorDaVez = listJogador.get(i);
-		// variavel para armazena
+		Socket jogadorDaVez = listJogador.get(i); 
 		// o jogador que vai fazer a jogada no round
 		int valorDoDado;
 		boolean jogada = true;
-		// String[] qtdPecas = EnviarPecas(listJogador);
+		String[] qtdPecas = new String[4];
 		try {
 			while (true) {
 				while (jogada) {
@@ -110,7 +109,7 @@ public class Servidor extends Thread {
 					EnviarParaTodos(listJogador, jogadaDoJogador);
 
 					// qtdPecas =
-					EnviarPecas(listJogador);
+					qtdPecas = EnviarPecas(listJogador);
 
 					if (valores[0] != "6") {// SE O VALOR DO DADO FOR DIFERENTE DE 6 MUDA DE
 						// JOGADOR, SE NAO CONTINUA O // MESMO JOGADOR jogada = false; i++;
@@ -127,18 +126,15 @@ public class Servidor extends Thread {
 					}
 				}
 				// mudar isso
-				jogadorDaVez = listJogador.get(0);
+				jogadorDaVez = listJogador.get(0);//NAO INCREMETAMOS O JOGADOR POIS PRECISARIAMOS DA REGRA DA TELA PRA JOGAR.
 
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	} // mudar o jogador para jogar naquele round
-		// jogadorDaVez = listJogador.get(i);
-
-	// }
-
+	} 
+    // SE A TELA ESTIVESSE FUNCIONANDO ESSA FUNCAO IRIA SER CHAMADA
 	public static boolean AcabouOJogo(String[] pecas) {
 
 		for (String s : pecas) {
@@ -198,7 +194,7 @@ public class Servidor extends Thread {
 
 	// QUANTIDADE DE PECA QUE CADA JOGADOR TEM
 	public static String[] EnviarPecas(List<Socket> listJogador) {
-		String[] pecas = null;
+		String[] pecas = new String[4];
 		int i = 0;
 		try {
 			for (Socket j : listJogador) {
@@ -211,9 +207,10 @@ public class Servidor extends Thread {
 				// enviando a requisicao
 				pw.println(requisicao);
 				// quantidade de peca
-				// pecas[i] = inFromClient.readLine();
+				pecas[i] = inFromClient.readLine();
 				i++;
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
