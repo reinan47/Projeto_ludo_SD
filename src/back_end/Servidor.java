@@ -44,7 +44,7 @@ public class Servidor extends Thread {
 			System.exit(-1);
 		}
 		// pode modificar esse parametro para receber novas conexoes
-		while (listJogador.size() < 2) {
+		while (listJogador.size() < 4) {
 			s = serverSocket.accept();
 			System.out.println("conectou jogador" + s.getInetAddress());
 			if (listJogador.size() == 2) {
